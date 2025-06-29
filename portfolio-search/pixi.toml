@@ -9,3 +9,7 @@ version = "0.1.0"
 
 [dependencies]
 modular = "25.4.*"
+requests = ">=2.32.4,<3"
+boto3 = ">=1.38.46,<2"
+paramiko = ">=3.5.1,<4"
+numpy = ">=2.3.0,<3"

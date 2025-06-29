@@ -135,6 +135,101 @@ based on the research report.
   and finally to automated tuning—we unlocked the true potential of the
   hardware, delivering an experience that feels instantaneous.
 
-Python and PyTorch are great, but for maximum performance, you need to go to the
-metal. Mojo lets me do that without leaving the Python ecosystem. Here's a real,
-useful application running at speeds that were previously out of reach.
+#### About Autotuning
+
+It's a key detail, and the systems are new. Here’s the simple breakdown:
+
+**Autotuning is a feature of Mojo/MAX, which you will run on the Lambda Cloud
+hardware.**
+
+Let's clarify the roles:
+
+1. **Lambda Cloud:** Provides the **hardware**. It gives you a powerful NVIDIA
+   A100 or H100 GPU. Think of it as providing a world-class racetrack. It
+   doesn't know or care what car you're driving; it just provides the pristine
+   asphalt.
+
+2. **Mojo/MAX:** Provides the **software and the tuning tools**. Mojo's
+   `autotune` library is the expert driver and pit crew. It takes your code (the
+   "car") and runs it on the racetrack (the Lambda Cloud GPU) over and over,
+   trying different settings to see what makes it go fastest _on that specific
+   track_.
+
+### How It Works in Practice
+
+The autotuning step doesn't happen "via" the cloud provider in the sense that
+they offer a service for it. You will run a Mojo script _on your Lambda Cloud
+machine_ that performs the tuning.
+
+Here is what the code pattern looks like, which an LLM code-generator can easily
+implement. This is a simplified version of what you'll do in **Phase 3 (Hours
+10-12)** of your plan.
+
+**1. Your Tunable Kernel (`matmul_kernel.mojo`)**
+
+You'll write your tiled matrix multiplication kernel to accept the `TILE_DIM` as
+a compile-time parameter.
+
+```mojo
+from autotune import autotune_select
+from sys.intrinsics import get_env_var
+from memory import alloc, memset_zero
+from tensor import Tensor
+from device import Device, host, cuda
+
+// This kernel is parameterized by TILE_DIM
+fn tiled_matmul_kernel[
+    T: DType,
+    TILE_DIM: Int
+](c: Tensor[T], a: Tensor[T], b: Tensor[T]):
+    // ... your full tiled matmul logic from Phase 2 goes here ...
+    // It will use TILE_DIM throughout its implementation.
+    ...
+```
+
+**2. Your Tuning Script (`tune.py` or `tune.mojo`)**
+
+You'll write a separate script that imports the kernel and uses the `autotune`
+library to test different values for `TILE_DIM`.
+
+```python
+import mojo_interop
+from matmul_kernel import tiled_matmul_kernel
+from autotune import search
+
+# This is the function we want to tune.
+# We wrap our kernel call in it.
+def benchmark_matmul(tile_dim: int):
+    # Setup your input tensors (a, b) and output tensor (c) on the GPU
+    # ... tensor allocation and data copying logic ...
+
+    # Time the kernel execution
+    start_time = now()
+    tiled_matmul_kernel[DType.float32, tile_dim](c, a, b)
+    end_time = now()
+
+    # Return the execution time
+    return end_time - start_time
+
+# The magic happens here!
+# Tell Mojo to search over these specific values for the 'tile_dim' parameter.
+best_config = search(benchmark_matmul, {"tile_dim": [8, 16, 32, 64, 128]})
+
+# The autotuner runs benchmark_matmul with each tile_dim and finds the fastest.
+print("Autotuning complete!")
+print(f"The fastest TILE_DIM for this GPU is: {best_config['tile_dim']}")
+```
+
+### Your Workflow on Hackathon Day:
+
+1. You will write `matmul_kernel.mojo` and `tune.py` on **Machine 1 (Dev
+   Machine)**.
+2. You will then `scp` (secure copy) these files over to **Machine 2 (Data/Tune
+   Machine)**.
+3. On **Machine 2**, you will run `python tune.py`.
+4. You'll let it run for an hour or so. It will print out the best `TILE_DIM`.
+5. You take that optimal value (let's say it prints `32`) and you hardcode it
+   into the final version of the kernel you use in your application.
+
+So, in short: **Mojo provides the brains (`autotune`), and Lambda Cloud provides
+the brawn (the GPU).**

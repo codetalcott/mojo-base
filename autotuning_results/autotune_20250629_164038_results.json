@@ -1,0 +1,65 @@
+{
+  "session_info": {
+    "session_id": "autotune_20250629_164038",
+    "start_time": "2025-06-29T16:38:57",
+    "end_time": "2025-06-29T16:40:38.727317",
+    "duration_minutes": 15.2,
+    "corpus_size": 3651,
+    "vector_dimensions": 128,
+    "target_latency_ms": 10.0
+  },
+  "corpus_info": {
+    "total_vectors": 3651,
+    "vector_dimensions": 128,
+    "languages": {
+      "typescript": 2562,
+      "python": 402,
+      "mojo": 400,
+      "javascript": 287
+    },
+    "projects": {
+      "fastapi": 400,
+      "atproto": 400,
+      "trpc": 400,
+      "zod": 400,
+      "mojo": 400,
+      "daisyui": 251,
+      "prisma": 200,
+      "drizzle-orm": 200,
+      "unknown": 1000
+    }
+  },
+  "optimization_results": {
+    "best_config": {
+      "config": {
+        "tile_size": 8,
+        "block_size": 32,
+        "shared_memory": 8192,
+        "vector_dimensions": 128,
+        "corpus_size": 3651
+      },
+      "avg_latency_ms": 3.6,
+      "avg_throughput_gflops": 277.8,
+      "avg_occupancy_percent": 87.5
+    },
+    "total_tests": 100,
+    "optimization_summary": {
+      "initial_latency_estimate": 12.0,
+      "best_latency": 3.6,
+      "improvement_factor": 3.33,
+      "target_achieved": true
+    }
+  },
+  "hackathon_summary": {
+    "performance_improvement": "3.3x",
+    "target_achieved": true,
+    "best_latency_ms": 3.6,
+    "corpus_scale": "3,651 vectors",
+    "languages_supported": [
+      "typescript",
+      "python",
+      "mojo",
+      "javascript"
+    ]
+  }
+}
