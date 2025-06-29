@@ -26,7 +26,7 @@ This project implements a high-performance semantic search engine for code disco
 cd <project-root>
 
 # Activate pixi environment
-./activate-pixi.sh
+./tools/activate-pixi.sh
 
 # Test Mojo environment
 pixi run mojo simple_test.mojo

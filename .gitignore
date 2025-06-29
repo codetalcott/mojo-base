@@ -182,4 +182,15 @@ checkpoints/
 *.ptx
 
 # Custom project ignores
-# Add any project-specific files or directories here
+# Onedev database files
+.onedev/context.db-*
+
+# Autotuning results (generated)
+autotuning_results/*.json
+dual_gpu_results/
+
+# Local configuration
+config_local.json
+
+# Temporary corpus data
+data/temp_*
