@@ -81,23 +81,39 @@ fn demo_architectural_patterns():
             print("    - project/src/implementation.py")
 
 fn demo_onedev_integration():
-    """Demonstrate integration with onedev portfolio intelligence."""
+    """Demonstrate integration status with onedev portfolio intelligence."""
     print("\n🔗 Onedev Portfolio Integration")
     print("==============================")
     
-    print("📊 Portfolio Intelligence:")
-    print("  - 48 projects scanned")
-    print("  - 15,000+ code snippets indexed")
-    print("  - Health scores: 65.6% average")
-    print("  - Technologies: Node.js, Python, Go, TypeScript")
+    # Check if onedev is available (simulation)
+    var onedev_available = False  # Set to False for public demo
     
-    print("\n🧠 Context Assembly:")
-    print("  - Cross-project pattern detection")
-    print("  - Architectural consistency analysis")
-    print("  - Technology consolidation opportunities")
-    
-    print("\n🎯 Enhanced Search:")
-    print("  - Project relevance boosting")
+    if onedev_available:
+        print("✅ Onedev Status: AVAILABLE")
+        print("📊 Portfolio Intelligence:")
+        print("  - 48 projects scanned")
+        print("  - 15,000+ code snippets indexed")
+        print("  - Health scores: 65.6% average")
+        print("  - Technologies: Node.js, Python, Go, TypeScript")
+        
+        print("\n🧠 Context Assembly:")
+        print("  - Cross-project pattern detection")
+        print("  - Architectural consistency analysis")
+        print("  - Technology consolidation opportunities")
+        
+        print("\n🎯 Enhanced Search:")
+        print("  - Project relevance boosting")
+    else:
+        print("⚠️  Onedev Status: NOT AVAILABLE")
+        print("📊 Fallback Mode Active:")
+        print("  - Basic semantic search enabled")
+        print("  - Limited cross-project features")
+        print("  - Local project scanning only")
+        
+        print("\n💡 To enable full features:")
+        print("  - Install onedev portfolio intelligence")
+        print("  - Configure MCP server connection")
+        print("  - Update config.json with onedev path")
     print("  - Recency-based ranking")
     print("  - Context-aware results")
 

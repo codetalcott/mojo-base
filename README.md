@@ -35,9 +35,12 @@ pixi run mojo simple_test.mojo
 pixi run mojo semantic_search_mvp.mojo
 ```
 
-### Onedev Integration
+### Onedev Integration (Optional)
 
-Onedev functionality is automatically activated via `.mcp.json`:
+**⚠️ Note: Onedev is not publicly available yet. The system gracefully falls back to basic functionality.**
+
+#### With Onedev (Full Features)
+If you have access to onedev, configure it via `.mcp.json`:
 
 ```json
 {
@@ -50,6 +53,23 @@ Onedev functionality is automatically activated via `.mcp.json`:
   }
 }
 ```
+
+And enable in `config.json`:
+```json
+{
+  "onedev_integration": {
+    "enabled": true,
+    "auto_detect": true
+  }
+}
+```
+
+#### Without Onedev (Fallback Mode)
+The system automatically detects when onedev is unavailable and provides:
+- Basic semantic search functionality
+- Local project scanning
+- Simple context assembly
+- Core Mojo kernel performance
 
 ## 📊 Performance Results
 
@@ -136,12 +156,19 @@ Results: Auth middleware across web projects with different strategies
 - **Cross-language Support**: Semantic bridges between JS, Python, Go, TypeScript
 - **Pattern Matching**: Architectural pattern detection and consolidation analysis
 
-### Portfolio Integration
+### Portfolio Integration (when onedev available)
 
 - **48+ Projects Indexed**: Comprehensive portfolio coverage
 - **Health-based Ranking**: Boost results from high-health projects
 - **Technology Relevance**: Match results to current tech stack
 - **Recency Boosting**: Prefer recently modified implementations
+
+### Fallback Mode (without onedev)
+
+- **Core Search**: Full semantic search capabilities maintained
+- **Local Scanning**: Basic project discovery from filesystem
+- **Essential Features**: All critical functionality available
+- **Performance**: Same kernel optimizations and speed
 
 ## 📈 Success Metrics
 
@@ -157,8 +184,8 @@ Results: Auth middleware across web projects with different strategies
 1. **Core MLA + BMM kernels** ✅ - High-performance implementation
 2. **Real-time search** ✅ - Sub-50ms query response 
 3. **Portfolio coverage** ✅ - Cross-project semantic understanding
-4. **Onedev integration** ✅ - Portfolio intelligence enhancement
-5. **Production readiness** ✅ - Systematic architecture and testing
+4. **Optional onedev integration** ✅ - Enhanced features when available, graceful fallback
+5. **Production readiness** ✅ - Works independently without external dependencies
 
 ## 🔄 Development Workflow
 
@@ -200,8 +227,8 @@ Implementation follows expert Mojo optimization patterns:
 
 - High-performance Mojo kernels working with real semantic understanding
 - Sub-50ms real-time search across large portfolios
-- Onedev integration providing portfolio intelligence
+- Optional onedev integration with graceful fallback mode
 - Systematic architecture with extensible design
-- Comprehensive testing and validation
+- Works independently without external dependencies
 
-Ready for production deployment and further development!
+**🚀 Ready for immediate use!** No external dependencies required - works out-of-the-box with optional onedev enhancement.

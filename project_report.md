@@ -1,7 +1,5 @@
 # Mojo Semantic Search Project Report
 
-Wm Talcott wtalcott@gmail.com
-
 ## Project Goals
 
 The project aimed to build a real-time cross-project semantic code search engine
