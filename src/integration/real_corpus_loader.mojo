@@ -111,13 +111,13 @@ fn create_real_search_index(corpus: RealCorpus) -> Bool:
     var languages = ["typescript", "javascript", "python"]
     for i in range(3):
         var lang = languages[i]
-        print(f"    📚 {lang} index: created")
+        print("    📚 " + lang + " index: created")
     
     # Context type indices
     var context_types = ["full_file", "function", "class"]
     for i in range(3):
         var ctx_type = context_types[i]
-        print(f"    🏷️  {ctx_type} index: created")
+        print("    🏷️  " + ctx_type + " index: created")
     
     print("\n💾 Index Statistics:")
     print("  - Memory usage: ~1.5 MB (estimated)")
@@ -163,11 +163,11 @@ fn adapt_mojo_kernels_for_128dim() -> Bool:
 
 fn simulate_real_vector_search(query: String, max_results: Int) -> Bool:
     """Simulate semantic search with real vectors."""
-    print(f"\n🔍 Simulating Real Vector Search")
+    print("\n🔍 Simulating Real Vector Search")
     print("===============================")
     
-    print(f"🎯 Query: '{query}'")
-    print(f"📊 Max results: {max_results}")
+    print("🎯 Query: '" + query + "'")
+    print("📊 Max results: " + str(max_results))
     
     # Simulate search process
     print("\n⚡ Search Process:")

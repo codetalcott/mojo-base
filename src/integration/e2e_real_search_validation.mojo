@@ -49,22 +49,17 @@ fn validate_real_corpus_loading() -> Bool:
     print("  5. Validate language distribution")
     
     # Simulated validation results
-    var validation_results = [
-        ("JSON parsing", True),
-        ("Vector dimensions", True),
-        ("Metadata consistency", True),
-        ("Project coverage", True),
-        ("Language distribution", True)
-    ]
+    var test_names = ["JSON parsing", "Vector dimensions", "Metadata consistency", "Project coverage", "Language distribution"]
+    var test_results = [True, True, True, True, True]
     
     var all_passed = True
     for i in range(5):
-        var test_name = validation_results[i].0
-        var test_result = validation_results[i].1
+        var test_name = test_names[i]
+        var test_result = test_results[i]
         if test_result:
-            print(f"    ✅ {test_name}: PASSED")
+            print("    ✅ " + test_name + ": PASSED")
         else:
-            print(f"    ❌ {test_name}: FAILED")
+            print("    ❌ " + test_name + ": FAILED")
             all_passed = False
     
     if all_passed:
@@ -91,18 +86,18 @@ fn validate_128dim_vector_operations() -> Bool:
     # CPU operations (simulated)
     var cpu_baseline_768 = 12.7  # Original 768-dim baseline
     var cpu_128_projected = cpu_baseline_768 / 6.0  # 6x improvement
-    print(f"  CPU Operations (128-dim):")
-    print(f"    - Original 768-dim: {cpu_baseline_768}ms")
-    print(f"    - Projected 128-dim: {cpu_128_projected:.1f}ms")
-    print(f"    - Improvement: {cpu_baseline_768 / cpu_128_projected:.1f}x faster")
+    print("  CPU Operations (128-dim):")
+    print("    - Original 768-dim: " + str(cpu_baseline_768) + "ms")
+    print("    - Projected 128-dim: " + str(cpu_128_projected) + "ms")
+    print("    - Improvement: " + str(cpu_baseline_768 / cpu_128_projected) + "x faster")
     
     # GPU operations (simulated)
     var gpu_baseline_768 = 5.0  # Original 768-dim GPU performance
     var gpu_128_projected = gpu_baseline_768 / 6.0
-    print(f"  GPU Operations (128-dim):")
-    print(f"    - Original 768-dim: {gpu_baseline_768}ms")
-    print(f"    - Projected 128-dim: {gpu_128_projected:.1f}ms")
-    print(f"    - Improvement: {gpu_baseline_768 / gpu_128_projected:.1f}x faster")
+    print("  GPU Operations (128-dim):")
+    print("    - Original 768-dim: " + str(gpu_baseline_768) + "ms")
+    print("    - Projected 128-dim: " + str(gpu_128_projected) + "ms")
+    print("    - Improvement: " + str(gpu_baseline_768 / gpu_128_projected) + "x faster")
     
     # Validate operations are working
     var operations_valid = (cpu_128_projected < 5.0 and gpu_128_projected < 2.0)
@@ -117,11 +112,11 @@ fn validate_128dim_vector_operations() -> Bool:
 
 fn simulate_real_semantic_search(query: String, corpus_size: Int) -> SearchPerformanceMetrics:
     """Simulate semantic search with real performance characteristics."""
-    print(f"\n🔍 Simulating Real Semantic Search")
+    print("\n🔍 Simulating Real Semantic Search")
     print("==================================")
     
-    print(f"🎯 Query: '{query}'")
-    print(f"📊 Corpus size: {corpus_size:,} vectors")
+    print("🎯 Query: '" + query + "'")
+    print("📊 Corpus size: " + str(corpus_size) + " vectors")
     
     # Simulate search pipeline timing (based on 128-dim optimizations)
     var query_embedding_time = 0.3  # Fast embedding generation
@@ -130,12 +125,12 @@ fn simulate_real_semantic_search(query: String, corpus_size: Int) -> SearchPerfo
     var mcp_enhancement_time = 4.5  # MCP tool integration
     var total_time = query_embedding_time + vector_search_time + ranking_time + mcp_enhancement_time
     
-    print(f"\n⏱️ Search Pipeline Performance:")
-    print(f"  1. Query embedding: {query_embedding_time}ms")
-    print(f"  2. Vector search: {vector_search_time}ms")
-    print(f"  3. Result ranking: {ranking_time}ms")
-    print(f"  4. MCP enhancement: {mcp_enhancement_time}ms")
-    print(f"  Total latency: {total_time}ms")
+    print("\n⏱️ Search Pipeline Performance:")
+    print("  1. Query embedding: " + str(query_embedding_time) + "ms")
+    print("  2. Vector search: " + str(vector_search_time) + "ms")
+    print("  3. Result ranking: " + str(ranking_time) + "ms")
+    print("  4. MCP enhancement: " + str(mcp_enhancement_time) + "ms")
+    print("  Total latency: " + str(total_time) + "ms")
     
     # Simulate realistic result count
     var results_found = 8  # Typical search results
@@ -177,7 +172,7 @@ fn validate_search_accuracy_with_real_data() -> Bool:
     
     for i in range(5):
         var query = test_queries[i]
-        print(f"\n  Test {i+1}: '{query}'")
+        print("\n  Test " + str(i+1) + ": '" + query + "'")
         
         # Simulate realistic accuracy based on real corpus content
         var expected_accuracy = 0.85  # High accuracy due to quality corpus
@@ -192,17 +187,18 @@ fn validate_search_accuracy_with_real_data() -> Bool:
         elif "Python" in query:
             expected_accuracy = 0.90  # Many Python projects
         
-        print(f"    Expected accuracy: {expected_accuracy:.1%}")
-        print(f"    Relevant results: Found matches in multiple projects")
-        print(f"    Context quality: High (real code snippets)")
+        print("    Expected accuracy: " + str(expected_accuracy) + "%")
+        print("    Relevant results: Found matches in multiple projects")
+        print("    Context quality: High (real code snippets)")
         
         total_accuracy += expected_accuracy
     
     var average_accuracy = total_accuracy / 5.0
-    print(f"\n📊 Overall Accuracy Assessment:")
-    print(f"  - Average accuracy: {average_accuracy:.1%}")
-    print(f"  - Accuracy target: >80%")
-    print(f"  - Status: {'✅ PASSED' if average_accuracy > 0.8 else '❌ FAILED'}")
+    print("\n📊 Overall Accuracy Assessment:")
+    print("  - Average accuracy: " + str(average_accuracy) + "%")
+    print("  - Accuracy target: >80%")
+    var status = "✅ PASSED" if average_accuracy > 0.8 else "❌ FAILED"
+    print("  - Status: " + status)
     
     var accuracy_valid = (average_accuracy > 0.8)
     
@@ -284,31 +280,35 @@ fn validate_performance_targets_with_real_data() -> Bool:
     
     # CPU performance (6x improvement from 128-dim)
     var cpu_real_performance = 2.1  # 12.7ms / 6
-    print(f"  CPU Search (128-dim): {cpu_real_performance}ms")
-    print(f"    - Original 768-dim baseline: 12.7ms")
-    print(f"    - Improvement: {12.7 / cpu_real_performance:.1f}x faster")
-    print(f"    - Status: {'✅ EXCELLENT' if cpu_real_performance < 5.0 else '❌ NEEDS WORK'}")
+    print("  CPU Search (128-dim): " + str(cpu_real_performance) + "ms")
+    print("    - Original 768-dim baseline: 12.7ms")
+    print("    - Improvement: " + str(12.7 / cpu_real_performance) + "x faster")
+    var cpu_status = "✅ EXCELLENT" if cpu_real_performance < 5.0 else "❌ NEEDS WORK"
+    print("    - Status: " + cpu_status)
     
     # GPU performance (6x improvement from 128-dim)
     var gpu_real_performance = 0.8  # 5.0ms / 6
-    print(f"  GPU Search (128-dim): {gpu_real_performance}ms")
-    print(f"    - Original 768-dim target: 5.0ms")
-    print(f"    - Improvement: {5.0 / gpu_real_performance:.1f}x faster")
-    print(f"    - Status: {'✅ EXCELLENT' if gpu_real_performance < 2.0 else '❌ NEEDS WORK'}")
+    print("  GPU Search (128-dim): " + str(gpu_real_performance) + "ms")
+    print("    - Original 768-dim target: 5.0ms")
+    print("    - Improvement: " + str(5.0 / gpu_real_performance) + "x faster")
+    var gpu_status = "✅ EXCELLENT" if gpu_real_performance < 2.0 else "❌ NEEDS WORK"
+    print("    - Status: " + gpu_status)
     
     # MCP integration overhead
     var mcp_overhead = 4.2  # Optimized from 350ms subprocess to native integration
-    print(f"  MCP Enhancement: {mcp_overhead}ms")
-    print(f"    - Target: <5ms")
-    print(f"    - Status: {'✅ WITHIN TARGET' if mcp_overhead < 5.0 else '❌ EXCEEDS TARGET'}")
+    print("  MCP Enhancement: " + str(mcp_overhead) + "ms")
+    print("    - Target: <5ms")
+    var mcp_status = "✅ WITHIN TARGET" if mcp_overhead < 5.0 else "❌ EXCEEDS TARGET"
+    print("    - Status: " + mcp_status)
     
     # Total performance
     var total_latency = cpu_real_performance + mcp_overhead  # Using CPU as baseline
-    print(f"\n🎯 Total Performance (CPU + MCP):")
-    print(f"  - Total latency: {total_latency}ms")
-    print(f"  - Original target: 20ms")
-    print(f"  - Improvement: {20.0 / total_latency:.1f}x better than target")
-    print(f"  - Status: {'✅ EXCEEDS TARGET' if total_latency < 20.0 else '❌ MISSES TARGET'}")
+    print("\n🎯 Total Performance (CPU + MCP):")
+    print("  - Total latency: " + str(total_latency) + "ms")
+    print("  - Original target: 20ms")
+    print("  - Improvement: " + str(20.0 / total_latency) + "x better than target")
+    var total_status = "✅ EXCEEDS TARGET" if total_latency < 20.0 else "❌ MISSES TARGET"
+    print("  - Status: " + total_status)
     
     var performance_targets_met = (
         cpu_real_performance < 5.0 and
@@ -332,23 +332,18 @@ fn run_comprehensive_e2e_validation() -> Bool:
     print("Validating complete Mojo semantic search with real portfolio corpus")
     print()
     
-    var validation_results = [
-        ("Real corpus loading", False),
-        ("128-dim vector operations", False),
-        ("Search accuracy", False),
-        ("Portfolio intelligence", False),
-        ("Performance targets", False)
-    ]
+    var validation_names = ["Real corpus loading", "128-dim vector operations", "Search accuracy", "Portfolio intelligence", "Performance targets"]
+    var validation_results = [False, False, False, False, False]
     
     # Step 1: Validate corpus loading
     print("📊 STEP 1: Real Corpus Loading Validation")
     print("=" * 50)
-    validation_results[0] = ("Real corpus loading", validate_real_corpus_loading())
+    validation_results[0] = validate_real_corpus_loading()
     
     # Step 2: Validate vector operations
     print("\n🧬 STEP 2: Vector Operations Validation") 
     print("=" * 50)
-    validation_results[1] = ("128-dim vector operations", validate_128dim_vector_operations())
+    validation_results[1] = validate_128dim_vector_operations()
     
     # Step 3: Test search with real data
     print("\n🔍 STEP 3: Real Search Simulation")
@@ -358,17 +353,17 @@ fn run_comprehensive_e2e_validation() -> Bool:
     # Step 4: Validate search accuracy
     print("\n🎯 STEP 4: Search Accuracy Validation")
     print("=" * 50)
-    validation_results[2] = ("Search accuracy", validate_search_accuracy_with_real_data())
+    validation_results[2] = validate_search_accuracy_with_real_data()
     
     # Step 5: Validate portfolio intelligence
     print("\n💡 STEP 5: Portfolio Intelligence Validation")
     print("=" * 50)
-    validation_results[3] = ("Portfolio intelligence", validate_portfolio_intelligence_enhancement())
+    validation_results[3] = validate_portfolio_intelligence_enhancement()
     
     # Step 6: Validate performance targets
     print("\n⚡ STEP 6: Performance Targets Validation")
     print("=" * 50)
-    validation_results[4] = ("Performance targets", validate_performance_targets_with_real_data())
+    validation_results[4] = validate_performance_targets_with_real_data()
     
     # Summary
     print("\n" + "="*60)
@@ -377,14 +372,14 @@ fn run_comprehensive_e2e_validation() -> Bool:
     
     var all_passed = True
     for i in range(5):
-        var test_name = validation_results[i].0
-        var test_result = validation_results[i].1
+        var test_name = validation_names[i]
+        var test_result = validation_results[i]
         var status = "✅ PASSED" if test_result else "❌ FAILED"
-        print(f"{status}: {test_name}")
+        print(status + ": " + test_name)
         if not test_result:
             all_passed = False
     
-    print(f"\n🎯 Overall Validation Status:")
+    print("\n🎯 Overall Validation Status:")
     if all_passed:
         print("✅ ALL VALIDATIONS PASSED")
         print("✅ Real semantic search system fully operational")
@@ -393,13 +388,13 @@ fn run_comprehensive_e2e_validation() -> Bool:
         print("❌ SOME VALIDATIONS FAILED")
         print("🔧 Issues need to be addressed before production")
     
-    print(f"\n📊 Key Validation Results:")
-    print(f"  🧬 Real vectors: 2,637 from 44 projects")
-    print(f"  📏 Vector dimensions: 128 (6x performance boost)")
-    print(f"  ⚡ Search performance: {search_metrics.total_latency_ms}ms")
-    print(f"  🎯 Performance vs target: {search_metrics.total_latency_ms / 20.0:.1f}x of 20ms target")
-    print(f"  💡 Portfolio intelligence: Fully integrated")
-    print(f"  🔗 MCP enhancement: Operational")
+    print("\n📊 Key Validation Results:")
+    print("  🧬 Real vectors: 2,637 from 44 projects")
+    print("  📏 Vector dimensions: 128 (6x performance boost)")
+    print("  ⚡ Search performance: " + str(search_metrics.total_latency_ms) + "ms")
+    print("  🎯 Performance vs target: " + str(search_metrics.total_latency_ms / 20.0) + "x of 20ms target")
+    print("  💡 Portfolio intelligence: Fully integrated")
+    print("  🔗 MCP enhancement: Operational")
     
     return all_passed
 

@@ -57,15 +57,16 @@ fn test_baseline_cpu_performance() -> PerformanceBenchmark:
     
     var throughput = Float64(query_count) / (total_time / 1000.0)  # QPS
     
-    print(f"\n⚡ CPU Performance Results:")
-    print(f"  - Average latency: {avg_latency:.1f}ms")
-    print(f"  - Min latency: {min_latency:.1f}ms")
-    print(f"  - Max latency: {max_latency:.1f}ms")
-    print(f"  - Total time: {total_time:.1f}ms")
-    print(f"  - Throughput: {throughput:.1f} queries/second")
+    print("\n⚡ CPU Performance Results:")
+    print("  - Average latency: " + str(avg_latency) + "ms")
+    print("  - Min latency: " + str(min_latency) + "ms")
+    print("  - Max latency: " + str(max_latency) + "ms")
+    print("  - Total time: " + str(total_time) + "ms")
+    print("  - Throughput: " + str(throughput) + " queries/second")
     
     var target_met = (avg_latency < 5.0)  # Excellent performance target
-    print(f"  - Target (<5ms): {'✅ PASSED' if target_met else '❌ FAILED'}")
+    var status = "✅ PASSED" if target_met else "❌ FAILED"
+    print("  - Target (<5ms): " + status)
     
     var benchmark = PerformanceBenchmark(
         "CPU_Baseline_128dim",
@@ -110,16 +111,17 @@ fn test_gpu_accelerated_performance() -> PerformanceBenchmark:
     
     var throughput = Float64(query_count) / (total_time / 1000.0)
     
-    print(f"\n⚡ GPU Performance Results:")
-    print(f"  - Average latency: {avg_latency:.1f}ms")
-    print(f"  - Min latency: {min_latency:.1f}ms")
-    print(f"  - Max latency: {max_latency:.1f}ms")
-    print(f"  - Total time: {total_time:.1f}ms")
-    print(f"  - Throughput: {throughput:.1f} queries/second")
-    print(f"  - GPU utilization: 85% (excellent)")
+    print("\n⚡ GPU Performance Results:")
+    print("  - Average latency: " + str(avg_latency) + "ms")
+    print("  - Min latency: " + str(min_latency) + "ms")
+    print("  - Max latency: " + str(max_latency) + "ms")
+    print("  - Total time: " + str(total_time) + "ms")
+    print("  - Throughput: " + str(throughput) + " queries/second")
+    print("  - GPU utilization: 85% (excellent)")
     
     var target_met = (avg_latency < 2.0)  # Excellent GPU performance target
-    print(f"  - Target (<2ms): {'✅ PASSED' if target_met else '❌ FAILED'}")
+    var status = "✅ PASSED" if target_met else "❌ FAILED"
+    print("  - Target (<2ms): " + status)
     
     var benchmark = PerformanceBenchmark(
         "GPU_Tiled_128dim",
@@ -163,17 +165,18 @@ fn test_hybrid_routing_performance() -> PerformanceBenchmark:
     var total_time = Float64(query_count) * avg_latency
     var throughput = Float64(query_count) / (total_time / 1000.0)
     
-    print(f"\n⚡ Hybrid Routing Results:")
-    print(f"  - CPU routing: 30% of queries ({cpu_latency:.1f}ms avg)")
-    print(f"  - GPU routing: 70% of queries ({gpu_latency:.1f}ms avg)")
-    print(f"  - Weighted average: {avg_latency:.1f}ms")
-    print(f"  - Min latency: {min_latency:.1f}ms")
-    print(f"  - Max latency: {max_latency:.1f}ms")
-    print(f"  - Throughput: {throughput:.1f} queries/second")
-    print(f"  - Routing efficiency: 95% optimal selections")
+    print("\n⚡ Hybrid Routing Results:")
+    print("  - CPU routing: 30% of queries (" + str(cpu_latency) + "ms avg)")
+    print("  - GPU routing: 70% of queries (" + str(gpu_latency) + "ms avg)")
+    print("  - Weighted average: " + str(avg_latency) + "ms")
+    print("  - Min latency: " + str(min_latency) + "ms")
+    print("  - Max latency: " + str(max_latency) + "ms")
+    print("  - Throughput: " + str(throughput) + " queries/second")
+    print("  - Routing efficiency: 95% optimal selections")
     
     var target_met = (avg_latency < 3.0)  # Hybrid performance target
-    print(f"  - Target (<3ms): {'✅ PASSED' if target_met else '❌ FAILED'}")
+    var status = "✅ PASSED" if target_met else "❌ FAILED"
+    print("  - Target (<3ms): " + status)
     
     var benchmark = PerformanceBenchmark(
         "Hybrid_Routing_128dim",
@@ -215,17 +218,18 @@ fn test_mcp_enhanced_performance() -> PerformanceBenchmark:
     var total_time = Float64(query_count) * total_latency
     var throughput = Float64(query_count) / (total_time / 1000.0)
     
-    print(f"\n⚡ MCP-Enhanced Results:")
-    print(f"  - Base search: {base_search_latency:.1f}ms")
-    print(f"  - MCP enhancement: {mcp_enhancement_latency:.1f}ms")
-    print(f"  - Total latency: {total_latency:.1f}ms")
-    print(f"  - Min latency: {min_latency:.1f}ms")
-    print(f"  - Max latency: {max_latency:.1f}ms")
-    print(f"  - Throughput: {throughput:.1f} queries/second")
-    print(f"  - Enhancement value: Portfolio intelligence + cross-project insights")
+    print("\n⚡ MCP-Enhanced Results:")
+    print("  - Base search: " + str(base_search_latency) + "ms")
+    print("  - MCP enhancement: " + str(mcp_enhancement_latency) + "ms")
+    print("  - Total latency: " + str(total_latency) + "ms")
+    print("  - Min latency: " + str(min_latency) + "ms")
+    print("  - Max latency: " + str(max_latency) + "ms")
+    print("  - Throughput: " + str(throughput) + " queries/second")
+    print("  - Enhancement value: Portfolio intelligence + cross-project insights")
     
     var target_met = (total_latency < 10.0)  # Enhanced performance target
-    print(f"  - Target (<10ms): {'✅ PASSED' if target_met else '❌ FAILED'}")
+    var status = "✅ PASSED" if target_met else "❌ FAILED"
+    print("  - Target (<10ms): " + status)
     
     var benchmark = PerformanceBenchmark(
         "MCP_Enhanced_Full",
@@ -272,16 +276,17 @@ fn test_scalability_at_full_corpus() -> ScalabilityTest:
     
     var target_performance = (avg_latency < 15.0 and error_rate < 0.05)
     
-    print(f"\n⚡ Scalability Test Results:")
-    print(f"  - Queries processed: {total_queries:,}")
-    print(f"  - Average latency: {avg_latency:.1f}ms")
-    print(f"  - P95 latency: {p95_latency:.1f}ms")
-    print(f"  - P99 latency: {p99_latency:.1f}ms")
-    print(f"  - Error rate: {error_rate:.2%}")
-    print(f"  - Throughput: {queries_per_second:.1f} QPS")
-    print(f"  - Concurrent efficiency: {(1.0 - concurrent_overhead) * 100:.0f}% overhead")
+    print("\n⚡ Scalability Test Results:")
+    print("  - Queries processed: " + str(total_queries))
+    print("  - Average latency: " + str(avg_latency) + "ms")
+    print("  - P95 latency: " + str(p95_latency) + "ms")
+    print("  - P99 latency: " + str(p99_latency) + "ms")
+    print("  - Error rate: " + str(error_rate) + "%")
+    print("  - Throughput: " + str(queries_per_second) + " QPS")
+    print("  - Concurrent efficiency: " + str((1.0 - concurrent_overhead) * 100) + "% overhead")
     
-    print(f"  - Target performance: {'✅ PASSED' if target_performance else '❌ FAILED'}")
+    var status = "✅ PASSED" if target_performance else "❌ FAILED"
+    print("  - Target performance: " + status)
     
     var scalability_test = ScalabilityTest(
         corpus_size,
@@ -316,12 +321,12 @@ fn test_stress_performance() -> Bool:
     var cpu_usage = 88.0  # 88% CPU usage
     var gpu_usage = 92.0  # 92% GPU usage
     
-    print(f"\n⚡ Stress Test Results:")
-    print(f"  - Average latency: {stress_latency:.1f}ms")
-    print(f"  - Error rate: {stress_error_rate:.1%}")
-    print(f"  - CPU usage: {cpu_usage:.1f}%")
-    print(f"  - GPU usage: {gpu_usage:.1f}%")
-    print(f"  - Memory usage: {memory_usage:.1f}%")
+    print("\n⚡ Stress Test Results:")
+    print("  - Average latency: " + str(stress_latency) + "ms")
+    print("  - Error rate: " + str(stress_error_rate) + "%")
+    print("  - CPU usage: " + str(cpu_usage) + "%")
+    print("  - GPU usage: " + str(gpu_usage) + "%")
+    print("  - Memory usage: " + str(memory_usage) + "%")
     
     # Evaluate stress performance
     var latency_acceptable = (stress_latency < 15.0)
@@ -330,11 +335,15 @@ fn test_stress_performance() -> Bool:
     
     var stress_test_passed = (latency_acceptable and error_rate_acceptable and resource_usage_acceptable)
     
-    print(f"\n🎯 Stress Test Evaluation:")
-    print(f"  - Latency acceptable: {'✅ YES' if latency_acceptable else '❌ NO'}")
-    print(f"  - Error rate acceptable: {'✅ YES' if error_rate_acceptable else '❌ NO'}")
-    print(f"  - Resource usage acceptable: {'✅ YES' if resource_usage_acceptable else '❌ NO'}")
-    print(f"  - Overall stress test: {'✅ PASSED' if stress_test_passed else '❌ FAILED'}")
+    print("\n🎯 Stress Test Evaluation:")
+    var lat_status = "✅ YES" if latency_acceptable else "❌ NO"
+    var err_status = "✅ YES" if error_rate_acceptable else "❌ NO"
+    var res_status = "✅ YES" if resource_usage_acceptable else "❌ NO"
+    var stress_status = "✅ PASSED" if stress_test_passed else "❌ FAILED"
+    print("  - Latency acceptable: " + lat_status)
+    print("  - Error rate acceptable: " + err_status)
+    print("  - Resource usage acceptable: " + res_status)
+    print("  - Overall stress test: " + stress_status)
     
     return stress_test_passed
 
@@ -395,28 +404,35 @@ fn run_comprehensive_performance_testing() -> Bool:
     print("="*60)
     
     print("🎯 Individual Test Results:")
-    print(f"  CPU Baseline: {cpu_benchmark.avg_latency_ms:.1f}ms | {'✅ PASSED' if cpu_benchmark.target_met else '❌ FAILED'}")
-    print(f"  GPU Accelerated: {gpu_benchmark.avg_latency_ms:.1f}ms | {'✅ PASSED' if gpu_benchmark.target_met else '❌ FAILED'}")
-    print(f"  Hybrid Routing: {hybrid_benchmark.avg_latency_ms:.1f}ms | {'✅ PASSED' if hybrid_benchmark.target_met else '❌ FAILED'}")
-    print(f"  MCP Enhanced: {mcp_benchmark.avg_latency_ms:.1f}ms | {'✅ PASSED' if mcp_benchmark.target_met else '❌ FAILED'}")
-    print(f"  Scalability: {scalability_test.avg_latency_ms:.1f}ms | {'✅ PASSED' if scalability_test.target_performance else '❌ FAILED'}")
-    print(f"  Stress Test: {'✅ PASSED' if stress_passed else '❌ FAILED'}")
+    var cpu_status = "✅ PASSED" if cpu_benchmark.target_met else "❌ FAILED"
+    var gpu_status = "✅ PASSED" if gpu_benchmark.target_met else "❌ FAILED"
+    var hybrid_status = "✅ PASSED" if hybrid_benchmark.target_met else "❌ FAILED"
+    var mcp_status = "✅ PASSED" if mcp_benchmark.target_met else "❌ FAILED"
+    var scale_status = "✅ PASSED" if scalability_test.target_performance else "❌ FAILED"
+    var stress_status_final = "✅ PASSED" if stress_passed else "❌ FAILED"
     
-    print(f"\n⚡ Performance Achievements:")
-    print(f"  🚀 CPU Performance: {cpu_benchmark.avg_latency_ms:.1f}ms (6x improvement over 768-dim)")
-    print(f"  🚀 GPU Performance: {gpu_benchmark.avg_latency_ms:.1f}ms (6x improvement over 768-dim)")
-    print(f"  🚀 Hybrid Efficiency: {hybrid_benchmark.avg_latency_ms:.1f}ms (optimal routing)")
-    print(f"  🚀 MCP Enhancement: {mcp_benchmark.avg_latency_ms:.1f}ms (portfolio intelligence)")
-    print(f"  🚀 Scalability: {scalability_test.queries_processed:,} queries in 60s")
-    print(f"  🚀 Throughput: {hybrid_benchmark.throughput_qps:.0f} QPS (excellent)")
+    print("  CPU Baseline: " + str(cpu_benchmark.avg_latency_ms) + "ms | " + cpu_status)
+    print("  GPU Accelerated: " + str(gpu_benchmark.avg_latency_ms) + "ms | " + gpu_status)
+    print("  Hybrid Routing: " + str(hybrid_benchmark.avg_latency_ms) + "ms | " + hybrid_status)
+    print("  MCP Enhanced: " + str(mcp_benchmark.avg_latency_ms) + "ms | " + mcp_status)
+    print("  Scalability: " + str(scalability_test.avg_latency_ms) + "ms | " + scale_status)
+    print("  Stress Test: " + stress_status_final)
     
-    print(f"\n📊 Comparison to Targets:")
-    print(f"  Original target: <20ms")
-    print(f"  Best achieved: {gpu_benchmark.avg_latency_ms:.1f}ms ({20.0 / gpu_benchmark.avg_latency_ms:.1f}x better)")
-    print(f"  MCP enhanced: {mcp_benchmark.avg_latency_ms:.1f}ms ({20.0 / mcp_benchmark.avg_latency_ms:.1f}x better)")
-    print(f"  Performance improvement: 6x faster due to 128-dim optimization")
+    print("\n⚡ Performance Achievements:")
+    print("  🚀 CPU Performance: " + str(cpu_benchmark.avg_latency_ms) + "ms (6x improvement over 768-dim)")
+    print("  🚀 GPU Performance: " + str(gpu_benchmark.avg_latency_ms) + "ms (6x improvement over 768-dim)")
+    print("  🚀 Hybrid Efficiency: " + str(hybrid_benchmark.avg_latency_ms) + "ms (optimal routing)")
+    print("  🚀 MCP Enhancement: " + str(mcp_benchmark.avg_latency_ms) + "ms (portfolio intelligence)")
+    print("  🚀 Scalability: " + str(scalability_test.queries_processed) + " queries in 60s")
+    print("  🚀 Throughput: " + str(hybrid_benchmark.throughput_qps) + " QPS (excellent)")
     
-    print(f"\n🎯 Overall Performance Status:")
+    print("\n📊 Comparison to Targets:")
+    print("  Original target: <20ms")
+    print("  Best achieved: " + str(gpu_benchmark.avg_latency_ms) + "ms (" + str(20.0 / gpu_benchmark.avg_latency_ms) + "x better)")
+    print("  MCP enhanced: " + str(mcp_benchmark.avg_latency_ms) + "ms (" + str(20.0 / mcp_benchmark.avg_latency_ms) + "x better)")
+    print("  Performance improvement: 6x faster due to 128-dim optimization")
+    
+    print("\n🎯 Overall Performance Status:")
     if all_tests_passed:
         print("✅ ALL PERFORMANCE TESTS PASSED")
         print("✅ System ready for production deployment")

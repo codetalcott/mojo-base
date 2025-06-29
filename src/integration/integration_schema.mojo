@@ -114,7 +114,7 @@ fn design_vector_adaptation_strategy() -> String:
     print("  4. Maintain performance targets (<20ms total)")
     
     var strategy = "ADAPT_KERNELS_TO_128_DIM"
-    print(f"\n✅ Recommended strategy: {strategy}")
+    print("\n✅ Recommended strategy: " + strategy)
     return strategy
 
 fn design_corpus_loading_pipeline() -> Bool:
