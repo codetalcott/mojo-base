@@ -1,0 +1,125 @@
+# LLM Guide to Onedev MCP Tools Integration
+
+## Overview
+Onedev provides 69 AI-accessible tools across 9 domains through the Model Context Protocol (MCP).
+This guide helps LLM agents effectively use onedev tools for the Mojo semantic search project.
+
+## Activation
+Onedev is activated via .mcp.json in the project root. No additional setup required.
+
+## Key MCP Tools for Semantic Search
+
+### Vector Search Tools
+1. **search_codebase_knowledge**
+   - Purpose: Semantic search across portfolio codebases
+   - Usage: Find similar code patterns, implementations, architectural decisions
+   - Example: search_codebase_knowledge("http client error handling")
+
+2. **assemble_context**
+   - Purpose: Generate AI context with embeddings for code understanding
+   - Usage: Gather relevant code patterns for semantic analysis
+   - Example: assemble_context("mojo kernel optimization", "performance")
+
+3. **get_vector_similarity_insights**
+   - Purpose: Analyze vector similarity for pattern matching
+   - Usage: Find semantically similar code across projects
+   - Example: get_vector_similarity_insights("semantic search implementation")
+
+### Pattern Detection Tools
+4. **find_patterns**
+   - Purpose: Detect code patterns across portfolio
+   - Usage: Identify architectural patterns, API usage, implementations
+   - Example: find_patterns("middleware authentication")
+
+5. **find_similar_patterns**
+   - Purpose: Find variations of code patterns
+   - Usage: Discover different implementations of same concept
+   - Example: find_similar_patterns("database connection pooling")
+
+### Portfolio Analysis Tools
+6. **scan_projects**
+   - Purpose: Discover and analyze portfolio projects
+   - Usage: Index code snippets for semantic search
+   - Example: scan_projects("/Users/williamtalcott/projects")
+
+7. **get_portfolio_overview**
+   - Purpose: High-level portfolio intelligence
+   - Usage: Understand project health, technologies, relationships
+   - Example: get_portfolio_overview()
+
+### Architecture Tools
+8. **get_architectural_recommendations**
+   - Purpose: AI-powered architecture suggestions
+   - Usage: Improve semantic search architecture
+   - Example: get_architectural_recommendations("high-performance vector search")
+
+9. **analyze_architectural_patterns**
+   - Purpose: Deep analysis of architectural decisions
+   - Usage: Understand cross-project patterns
+   - Example: analyze_architectural_patterns("semantic search engines")
+
+## Integration Strategy for Mojo Semantic Search
+
+### 1. Code Indexing Phase
+Use these tools to build the semantic corpus:
+- scan_projects → Discover all portfolio projects
+- assemble_context → Generate embeddings for code snippets
+- analyze_project_structure → Understand code organization
+
+### 2. Search Enhancement Phase
+Improve search quality with:
+- search_codebase_knowledge → Baseline semantic search
+- get_vector_similarity_insights → Refine similarity metrics
+- find_patterns → Identify common code patterns
+
+### 3. Cross-Project Intelligence
+Enable portfolio-wide insights:
+- get_portfolio_overview → Project health and relationships
+- find_similar_patterns → Cross-project pattern matching
+- get_architectural_recommendations → Best practices
+
+## Best Practices
+
+1. **Batch Operations**: Use multiple tools in parallel for efficiency
+2. **Context Preservation**: Use assemble_context before deep analysis
+3. **Progressive Enhancement**: Start with basic search, add intelligence layers
+4. **Portfolio Awareness**: Consider project health and relationships in ranking
+
+## Example Workflow
+
+```python
+# 1. Initialize portfolio intelligence
+portfolio = get_portfolio_overview()
+projects = scan_projects(portfolio_path)
+
+# 2. Build semantic index
+for project in projects:
+    context = assemble_context(project.path, "code patterns")
+    patterns = find_patterns(project.type)
+    # Index with Mojo kernels
+
+# 3. Enhanced search
+query = "database connection error handling"
+results = search_codebase_knowledge(query)
+insights = get_vector_similarity_insights(query)
+patterns = find_similar_patterns(query)
+# Combine with Mojo BMM kernel results
+
+# 4. Apply portfolio intelligence
+recommendations = get_architectural_recommendations(query)
+# Boost results based on project health and relevance
+```
+
+## Performance Considerations
+
+- Onedev tools are optimized for sub-second response
+- Use caching for repeated context assembly
+- Batch similar operations for efficiency
+- Combine with Mojo kernels for < 50ms total latency
+
+## Troubleshooting
+
+- Check .mcp.json configuration if tools unavailable
+- Ensure onedev server is built: cd onedev && npm run build
+- Use get_claude_health tool to verify MCP connection
+- Review onedev/CLAUDE.md for complete tool inventory

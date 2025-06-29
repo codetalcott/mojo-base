@@ -4,6 +4,14 @@
 
 This file contains links to documentation sections following the llmstxt.org standard.
 
+## Onedev MCP Tools Integration
+
+For enhanced semantic search capabilities in Mojo projects, see [llm-onedev.txt](llm-onedev.txt) for guidance on using onedev's MCP tools for:
+- Vector-based semantic search across portfolio
+- Cross-project pattern detection
+- Real-time context assembly
+- Portfolio intelligence integration
+
 ## Table of Contents
 
 - [Attention mask](https://docs.modular.com/docs/glossary/ai/attention-mask): An attention mask is a mechanism used in the [attention](attention.mdx) layers
