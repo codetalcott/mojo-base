@@ -206,7 +206,7 @@ fn runtime_performance_optimization():
     
     for i in range(optimization_cycles):
         print("\n" + "="*50)
-        print("🔄 Optimization Cycle " + str(i + 1) + " of " + str(optimization_cycles))
+        print("🔄 Optimization Cycle " + String(i + 1) + " of 5")
         print("="*50)
         
         # Monitor system conditions

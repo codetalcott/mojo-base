@@ -15,6 +15,17 @@ struct PerformanceBenchmark:
     var max_latency_ms: Float64
     var throughput_qps: Float64
     var target_met: Bool
+    
+    fn __init__(inout self, name: String, size: Int, queries: Int, total: Float64, avg: Float64, min_lat: Float64, max_lat: Float64, qps: Float64, met: Bool):
+        self.test_name = name
+        self.corpus_size = size  
+        self.query_count = queries
+        self.total_time_ms = total
+        self.avg_latency_ms = avg
+        self.min_latency_ms = min_lat
+        self.max_latency_ms = max_lat
+        self.throughput_qps = qps
+        self.target_met = met
 
 struct ScalabilityTest:
     """Scalability test configuration and results."""
@@ -27,6 +38,17 @@ struct ScalabilityTest:
     var p99_latency_ms: Float64
     var error_rate: Float64
     var target_performance: Bool
+    
+    fn __init__(inout self, size: Int, concurrent: Int, duration: Int, processed: Int, avg: Float64, p95: Float64, p99: Float64, error: Float64, target: Bool):
+        self.corpus_size = size
+        self.concurrent_queries = concurrent
+        self.test_duration_seconds = duration
+        self.queries_processed = processed
+        self.avg_latency_ms = avg
+        self.p95_latency_ms = p95
+        self.p99_latency_ms = p99
+        self.error_rate = error
+        self.target_performance = target
 
 fn test_baseline_cpu_performance() -> PerformanceBenchmark:
     """Test baseline CPU performance with real corpus."""

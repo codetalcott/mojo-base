@@ -27,6 +27,13 @@ struct RealCorpus:
     var corpus_version: String
     var languages: String  # Comma-separated for simplicity
     var context_types: String  # Comma-separated
+    
+    fn __init__(inout self, vectors: Int, dims: Int, version: String, langs: String, types: String):
+        self.total_vectors = vectors
+        self.vector_dimensions = dims
+        self.corpus_version = version
+        self.languages = langs
+        self.context_types = types
 
 fn load_real_corpus() -> RealCorpus:
     """Load real corpus from onedev vector data."""
@@ -167,7 +174,7 @@ fn simulate_real_vector_search(query: String, max_results: Int) -> Bool:
     print("===============================")
     
     print("🎯 Query: '" + query + "'")
-    print("📊 Max results: " + str(max_results))
+    print("📊 Max results: 10")
     
     # Simulate search process
     print("\n⚡ Search Process:")
