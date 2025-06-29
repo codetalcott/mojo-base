@@ -20,10 +20,10 @@ class MCPRealBridge:
     """Enhanced MCP bridge with real corpus integration."""
     
     def __init__(self):
-        self.mcp_server_path = "/Users/williamtalcott/projects/onedev/dist/infrastructure/mcp/unified-mcp-main-v2.js"
-        self.portfolio_corpus_path = "/Users/williamtalcott/projects/mojo-base/data/portfolio_corpus.json"
-        self.onedev_project_path = "/Users/williamtalcott/projects/onedev"
-        self.mojo_project_path = "/Users/williamtalcott/projects/mojo-base"
+        self.mcp_server_path = "<onedev-project-path>/dist/infrastructure/mcp/unified-mcp-main-v2.js"
+        self.portfolio_corpus_path = "<project-root>/data/portfolio_corpus.json"
+        self.onedev_project_path = "<onedev-project-path>"
+        self.mojo_project_path = "<project-root>"
         self.portfolio_corpus = None
         
     def load_portfolio_corpus(self) -> bool:

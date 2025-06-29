@@ -26,7 +26,7 @@ struct OnedevBridge:
         """Initialize onedev integration bridge."""
         self.search_engine = search_engine
         self.portfolio_projects = List[String]()
-        self.onedev_mcp_path = "/Users/williamtalcott/projects/onedev/dist/infrastructure/mcp/unified-mcp-main-v2.js"
+        self.onedev_mcp_path = "<onedev-project-path>/dist/infrastructure/mcp/unified-mcp-main-v2.js"
         self.integration_active = False
         
         # Test onedev connectivity

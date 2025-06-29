@@ -32,7 +32,7 @@ class AutotuningManager:
     """Manages the complete autotuning process for the expanded corpus."""
     
     def __init__(self):
-        self.corpus_file = "/Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json"
+        self.corpus_file = "<project-root>/data/real_vector_corpus.json"
         self.results_dir = Path("autotuning_results")
         self.results_dir.mkdir(exist_ok=True)
         

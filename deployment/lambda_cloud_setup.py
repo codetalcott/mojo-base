@@ -19,7 +19,7 @@ class LambdaCloudDeployment:
     """Deploy semantic search system to Lambda Cloud."""
     
     def __init__(self):
-        self.project_root = Path("/Users/williamtalcott/projects/mojo-base")
+        self.project_root = Path("<project-root>")
         self.deployment_name = "mojo-semantic-search"
         self.instance_type = "gpu_1x_a10"  # A10 GPU for Mojo acceleration
         self.region = "us-east-1"

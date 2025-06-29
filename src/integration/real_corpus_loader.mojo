@@ -42,7 +42,7 @@ fn load_real_corpus() -> RealCorpus:
     
     # Simulate loading from real corpus file
     # In production, this would parse the JSON file
-    var corpus_path = "/Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json"
+    var corpus_path = "<project-root>/data/real_vector_corpus.json"
     
     print("📍 Corpus path:", corpus_path)
     print("📊 Loading real vector embeddings...")

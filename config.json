@@ -1,0 +1,18 @@
+{
+  "onedev_integration": {
+    "enabled": false,
+    "auto_detect": true,
+    "mcp_path": "<onedev-project-path>/dist/infrastructure/mcp/unified-mcp-main-v2.js",
+    "fallback_mode": "basic_search"
+  },
+  "search_config": {
+    "max_results": 50,
+    "similarity_threshold": 0.7,
+    "enable_cross_project": true
+  },
+  "performance": {
+    "enable_caching": true,
+    "max_cache_size": 1000,
+    "parallel_processing": true
+  }
+}

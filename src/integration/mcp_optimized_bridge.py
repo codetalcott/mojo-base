@@ -22,9 +22,9 @@ class MCPOptimizedBridge:
     """Optimized MCP bridge with native Python integration."""
     
     def __init__(self):
-        self.portfolio_corpus_path = "/Users/williamtalcott/projects/mojo-base/data/portfolio_corpus.json"
-        self.onedev_project_path = "/Users/williamtalcott/projects/onedev"
-        self.mojo_project_path = "/Users/williamtalcott/projects/mojo-base"
+        self.portfolio_corpus_path = "<project-root>/data/portfolio_corpus.json"
+        self.onedev_project_path = "<onedev-project-path>"
+        self.mojo_project_path = "<project-root>"
         
         # Performance optimizations
         self.portfolio_corpus = None

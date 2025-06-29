@@ -2,7 +2,7 @@
   "analysis_timestamp": "2025-06-29T11:32:15.674979",
   "analysis_duration_seconds": 0.089035,
   "context_database": {
-    "path": "/Users/williamtalcott/projects/onedev/.onedev/context.db",
+    "path": "<onedev-project-path>/.onedev/context.db",
     "schema": {
       "tables": {
         "project_metadata": {
@@ -608,7 +608,7 @@
     }
   },
   "portfolio_database": {
-    "database_path": "/Users/williamtalcott/projects/onedev/data/unified-portfolio.db",
+    "database_path": "<onedev-project-path>/data/unified-portfolio.db",
     "tables": [
       "projects",
       "conversations",

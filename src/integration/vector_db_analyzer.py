@@ -19,8 +19,8 @@ class VectorDatabaseAnalyzer:
     """Analyze and understand the existing onedev vector database structure."""
     
     def __init__(self):
-        self.onedev_context_db = "/Users/williamtalcott/projects/onedev/.onedev/context.db"
-        self.portfolio_db = "/Users/williamtalcott/projects/onedev/data/unified-portfolio.db"
+        self.onedev_context_db = "<onedev-project-path>/.onedev/context.db"
+        self.portfolio_db = "<onedev-project-path>/data/unified-portfolio.db"
         self.analysis_results = {}
         
     def analyze_database_schema(self, db_path: str) -> Dict:
@@ -211,9 +211,9 @@ class VectorDatabaseAnalyzer:
         
         # Try multiple possible locations
         possible_paths = [
-            "/Users/williamtalcott/projects/onedev/data/unified-portfolio.db",
-            "/Users/williamtalcott/projects/onedev/unified-portfolio.db",
-            "/Users/williamtalcott/projects/onedev/.onedev/unified-portfolio.db"
+            "<onedev-project-path>/data/unified-portfolio.db",
+            "<onedev-project-path>/unified-portfolio.db",
+            "<onedev-project-path>/.onedev/unified-portfolio.db"
         ]
         
         for db_path in possible_paths:
@@ -303,7 +303,7 @@ class VectorDatabaseAnalyzer:
         }
         
         # Save results
-        results_path = "/Users/williamtalcott/projects/mojo-base/analysis/vector_db_analysis.json"
+        results_path = "<project-root>/analysis/vector_db_analysis.json"
         Path(results_path).parent.mkdir(exist_ok=True)
         
         with open(results_path, 'w') as f:

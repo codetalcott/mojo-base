@@ -32,7 +32,7 @@ class SimpleCorpusExpander:
     """Simple corpus expansion using existing data structures."""
     
     def __init__(self):
-        self.corpus_file = "/Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json"
+        self.corpus_file = "<project-root>/data/real_vector_corpus.json"
         self.temp_dir = Path(tempfile.mkdtemp(prefix="corpus_exp_"))
         
         # Load existing corpus

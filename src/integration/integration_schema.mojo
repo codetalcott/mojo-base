@@ -122,7 +122,7 @@ fn design_corpus_loading_pipeline() -> Bool:
     print("\n📦 Corpus Loading Pipeline Design")
     print("================================")
     
-    print("📊 Data Source: /Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json")
+    print("📊 Data Source: <project-root>/data/real_vector_corpus.json")
     print("  - 1,000 sample vectors (from 2,114 total)")
     print("  - 716 unique files represented")
     print("  - 3 context types: full_file, function, class")

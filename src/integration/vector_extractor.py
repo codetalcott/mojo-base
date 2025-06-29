@@ -20,7 +20,7 @@ class VectorExtractor:
     """Extract and validate vector embeddings from onedev database."""
     
     def __init__(self):
-        self.context_db_path = "/Users/williamtalcott/projects/onedev/.onedev/context.db"
+        self.context_db_path = "<onedev-project-path>/.onedev/context.db"
         self.extracted_vectors = []
         self.vector_metadata = {}
         self.validation_results = {}
@@ -329,7 +329,7 @@ class VectorExtractor:
             
             # Step 4: Create sample corpus
             logger.info("\n📝 Step 4: Creating Sample Corpus")
-            corpus_path = "/Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json"
+            corpus_path = "<project-root>/data/real_vector_corpus.json"
             corpus_info = self.create_sample_corpus(corpus_path, sample_size=1000)
             
             # Compile results
@@ -352,7 +352,7 @@ class VectorExtractor:
             }
             
             # Save detailed results
-            results_path = "/Users/williamtalcott/projects/mojo-base/analysis/vector_extraction_results.json"
+            results_path = "<project-root>/analysis/vector_extraction_results.json"
             Path(results_path).parent.mkdir(exist_ok=True)
             
             # Save without vector data for readability

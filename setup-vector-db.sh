@@ -6,18 +6,18 @@ echo "=================================================="
 
 # Ensure onedev is built
 echo "📦 Building onedev MCP server..."
-cd /Users/williamtalcott/projects/onedev
+cd <onedev-project-path>
 npm run build
 
 # Create vector database for mojo-base
 echo "🧠 Creating vector embeddings for mojo-base..."
-cd /Users/williamtalcott/projects/mojo-base
+cd <project-root>
 
 # Use onedev tools to analyze and embed mojo-base content
 echo "📊 Scanning project structure..."
 node -p "
 const { exec } = require('child_process');
-exec('node /Users/williamtalcott/projects/onedev/dist/infrastructure/mcp/unified-mcp-main-v2.js', (error, stdout, stderr) => {
+exec('node <onedev-project-path>/dist/infrastructure/mcp/unified-mcp-main-v2.js', (error, stdout, stderr) => {
   if (error) {
     console.log('MCP server ready for vector operations');
   }

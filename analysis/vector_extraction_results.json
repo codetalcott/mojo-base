@@ -85,7 +85,7 @@
     }
   },
   "sample_corpus": {
-    "corpus_path": "/Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json",
+    "corpus_path": "<project-root>/data/real_vector_corpus.json",
     "sample_size": 1000,
     "file_size_mb": 5.975581169128418
   },

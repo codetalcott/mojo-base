@@ -2,11 +2,11 @@
   "projects": [
     {
       "name": "onedev",
-      "path": "/Users/williamtalcott/projects/onedev"
+      "path": "<onedev-project-path>"
     },
     {
       "name": "mojo-base",
-      "path": "/Users/williamtalcott/projects/mojo-base"
+      "path": "<project-root>"
     }
   ]
 }

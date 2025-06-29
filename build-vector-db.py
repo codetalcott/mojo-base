@@ -11,7 +11,7 @@ def run_mcp_tool(tool_name: str, params: dict = None):
     """Run an onedev MCP tool via node CLI"""
     cmd = [
         "node", 
-        "/Users/williamtalcott/projects/onedev/dist/infrastructure/mcp/unified-mcp-main-v2.js",
+        "<onedev-project-path>/dist/infrastructure/mcp/unified-mcp-main-v2.js",
         "--tool", tool_name
     ]
     
@@ -31,7 +31,7 @@ def run_mcp_tool(tool_name: str, params: dict = None):
 
 def main():
     """Build vector database for mojo-base project"""
-    project_root = "/Users/williamtalcott/projects/mojo-base"
+    project_root = "<project-root>"
     
     print("🚀 Building Vector Database for Mojo-Base Project using Onedev")
     print("=" * 60)

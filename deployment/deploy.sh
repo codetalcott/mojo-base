@@ -13,7 +13,7 @@ echo ""
 DEPLOYMENT_NAME="mojo-semantic-search"
 INSTANCE_TYPE="gpu_1x_a10"
 REGION="us-east-1"
-PROJECT_ROOT="/Users/williamtalcott/projects/mojo-base"
+PROJECT_ROOT="<project-root>"
 
 # Validate prerequisites
 echo "🔍 Step 1: Validating Prerequisites"

@@ -23,8 +23,8 @@ class PortfolioCorpusBuilder:
     
     def __init__(self):
         self.projects_root = "/Users/williamtalcott/projects"
-        self.onedev_corpus_path = "/Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json"
-        self.output_corpus_path = "/Users/williamtalcott/projects/mojo-base/data/portfolio_corpus.json"
+        self.onedev_corpus_path = "<project-root>/data/real_vector_corpus.json"
+        self.output_corpus_path = "<project-root>/data/portfolio_corpus.json"
         self.discovered_projects = []
         self.corpus_entries = []
         

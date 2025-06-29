@@ -6,7 +6,7 @@ import sys
 import os
 
 # Add onedev project to path for direct tool access
-sys.path.insert(0, '/Users/williamtalcott/projects/onedev/src')
+sys.path.insert(0, '<onedev-project-path>/src')
 
 def semantic_search(query: str):
     """Perform semantic search using onedev vector capabilities"""
@@ -15,11 +15,11 @@ def semantic_search(query: str):
     
     # Use onedev's existing vector search via MCP
     os.system(f"""
-    cd /Users/williamtalcott/projects/mojo-base && 
+    cd <project-root> && 
     node -e "
     const {{ spawn }} = require('child_process');
     const mcp = spawn('node', [
-        '/Users/williamtalcott/projects/onedev/dist/infrastructure/mcp/unified-mcp-main-v2.js'
+        '<onedev-project-path>/dist/infrastructure/mcp/unified-mcp-main-v2.js'
     ]);
     
     // Send semantic search request
@@ -31,7 +31,7 @@ def semantic_search(query: str):
             name: 'search_codebase_knowledge',
             arguments: {{
                 query: '{query}',
-                project_path: '/Users/williamtalcott/projects/mojo-base'
+                project_path: '<project-root>'
             }}
         }}
     }};

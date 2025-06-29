@@ -23,7 +23,7 @@ This project implements a high-performance semantic search engine for code disco
 
 ```bash
 # Clone and navigate to project
-cd /Users/williamtalcott/projects/mojo-base
+cd <project-root>
 
 # Activate pixi environment
 ./activate-pixi.sh
@@ -44,8 +44,8 @@ Onedev functionality is automatically activated via `.mcp.json`:
   "mcpServers": {
     "project-brain": {
       "command": "node", 
-      "args": ["/Users/williamtalcott/projects/onedev/dist/infrastructure/mcp/unified-mcp-main-v2.js"],
-      "cwd": "/Users/williamtalcott/projects/onedev"
+      "args": ["<onedev-project-path>/dist/infrastructure/mcp/unified-mcp-main-v2.js"],
+      "cwd": "<onedev-project-path>"
     }
   }
 }

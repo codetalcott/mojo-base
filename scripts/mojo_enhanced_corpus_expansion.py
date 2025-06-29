@@ -33,7 +33,7 @@ class MojoEnhancedCorpusExpander:
     """Corpus expansion with special Mojo language support."""
     
     def __init__(self):
-        self.corpus_file = "/Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json"
+        self.corpus_file = "<project-root>/data/real_vector_corpus.json"
         self.temp_dir = Path(tempfile.mkdtemp(prefix="mojo_corpus_"))
         
         # Load existing corpus
