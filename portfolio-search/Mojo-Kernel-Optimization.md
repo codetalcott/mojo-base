@@ -3,6 +3,7 @@
 ## Table of Contents
 
 ### Core Sections
+
 - [Introduction](#introduction)
 - [Section 1: Mastering Instruction-Level Parallelism with SIMD](#section-1-mastering-instruction-level-parallelism-with-simd)
   - [1.1. Foundational SIMD Patterns](#11-foundational-simd-patterns)
@@ -24,39 +25,43 @@
 ## Performance Patterns Quick Reference
 
 ### SIMD Optimization Progression
-| Pattern | Technique | Performance Gain | Key Function |
-|---------|-----------|-----------------|--------------|
-| **Basic** | Element-wise operations | Baseline vectorization | `simd_arithmetic_patterns()` |
-| **Memory** | Aligned load/store | Memory bandwidth utilization | `load_store_patterns()` |
-| **Advanced** | Reductions & conditional logic | Complex algorithm vectorization | `advanced_simd_patterns()` |
-| **Hardware-Agnostic** | Native width detection | Portable vectorization | `vectorized_add[nelts]()` |
+
+| Pattern               | Technique                      | Performance Gain                | Key Function                 |
+| --------------------- | ------------------------------ | ------------------------------- | ---------------------------- |
+| **Basic**             | Element-wise operations        | Baseline vectorization          | `simd_arithmetic_patterns()` |
+| **Memory**            | Aligned load/store             | Memory bandwidth utilization    | `load_store_patterns()`      |
+| **Advanced**          | Reductions & conditional logic | Complex algorithm vectorization | `advanced_simd_patterns()`   |
+| **Hardware-Agnostic** | Native width detection         | Portable vectorization          | `vectorized_add[nelts]()`    |
 
 ### Parallelization Progression
-| Pattern | Target | Technique | Key Function |
-|---------|--------|-----------|--------------|
-| **CPU Multi-core** | Task parallelism | `parallelize[]` | `parallel_cpu_work()` |
-| **GPU Basic** | Massive parallelism | Grid/block/thread model | `vector_add_kernel()` |
-| **GPU Advanced** | Memory hierarchy | Shared memory + tiling | `tiled_gpu_kernel()` |
+
+| Pattern            | Target              | Technique               | Key Function          |
+| ------------------ | ------------------- | ----------------------- | --------------------- |
+| **CPU Multi-core** | Task parallelism    | `parallelize[]`         | `parallel_cpu_work()` |
+| **GPU Basic**      | Massive parallelism | Grid/block/thread model | `vector_add_kernel()` |
+| **GPU Advanced**   | Memory hierarchy    | Shared memory + tiling  | `tiled_gpu_kernel()`  |
 
 ### Matrix Multiplication Evolution
-| Implementation | Optimization Focus | Performance Characteristics | Function Name |
-|---------------|-------------------|---------------------------|---------------|
-| **Naive** | Baseline | O(n³) with poor cache behavior | `matmul_naive()` |
-| **Vectorized** | SIMD | 4-8x speedup from vectorization | `matmul_vectorized()` |
-| **Parallel** | Multi-core CPU | Additional 4-16x from parallelization | `matmul_vectorized_parallel()` |
-| **GPU Tiled** | Memory hierarchy | 10-100x speedup on appropriate workloads | `matmul_gpu_tiled()` |
-| **Autotuned** | Hardware-portable | Optimal performance across platforms | `matmul_autotuned()` |
+
+| Implementation | Optimization Focus | Performance Characteristics              | Function Name                  |
+| -------------- | ------------------ | ---------------------------------------- | ------------------------------ |
+| **Naive**      | Baseline           | O(n³) with poor cache behavior           | `matmul_naive()`               |
+| **Vectorized** | SIMD               | 4-8x speedup from vectorization          | `matmul_vectorized()`          |
+| **Parallel**   | Multi-core CPU     | Additional 4-16x from parallelization    | `matmul_vectorized_parallel()` |
+| **GPU Tiled**  | Memory hierarchy   | 10-100x speedup on appropriate workloads | `matmul_gpu_tiled()`           |
+| **Autotuned**  | Hardware-portable  | Optimal performance across platforms     | `matmul_autotuned()`           |
 
 ### Key Language Constructs for Performance
-| Construct | Purpose | Performance Impact |
-|-----------|---------|-------------------|
-| `fn` | Type safety & optimization | Enables aggressive compiler optimizations |
-| `SIMD[DType, width]` | Vectorization | Direct mapping to hardware vector instructions |
-| `@parameter` | Compile-time specialization | Zero-cost abstractions |
-| `parallelize[]` | CPU parallelism | Automatic work distribution |
-| `@kernel` + `DeviceContext` | GPU compute | Massive parallel execution |
-| `Shared[...]` | GPU shared memory | Fast on-chip memory access |
-| `autotune()` | Parameter optimization | Hardware-specific tuning |
+
+| Construct                   | Purpose                     | Performance Impact                             |
+| --------------------------- | --------------------------- | ---------------------------------------------- |
+| `fn`                        | Type safety & optimization  | Enables aggressive compiler optimizations      |
+| `SIMD[DType, width]`        | Vectorization               | Direct mapping to hardware vector instructions |
+| `@parameter`                | Compile-time specialization | Zero-cost abstractions                         |
+| `parallelize[]`             | CPU parallelism             | Automatic work distribution                    |
+| `@kernel` + `DeviceContext` | GPU compute                 | Massive parallel execution                     |
+| `Shared[...]`               | GPU shared memory           | Fast on-chip memory access                     |
+| `autotune()`                | Parameter optimization      | Hardware-specific tuning                       |
 
 ### **Introduction** {#introduction}
 
