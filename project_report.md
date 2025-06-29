@@ -39,6 +39,8 @@ All within a weekend, by a user new to Mojo and kernel optimization.
 - Tested multiple configurations for tile size, block size, and shared memory
   allocation
 - Ran autotuning process to identify optimal performance parameters
+- Autotuning is ongoing at the time of this report (to meet submission
+  deadlines)
 
 ## Results
 
@@ -54,7 +56,7 @@ limited duration (15.2 minutes) but achieved measurable improvements:
 - **Performance improvement: 3.3x faster**
 - Target latency (10ms): **Achieved and exceeded**
 
-**Optimal Configuration Identified:**
+**Optimal Configuration (Partially) Identified:**
 
 - Tile size: 8
 - Block size: 32
@@ -82,7 +84,7 @@ limited duration (15.2 minutes) but achieved measurable improvements:
 
 - Autotuning was cut short to meet submission deadline
 - Limited to 100 test configurations due to time constraints
-- Full 48-project portfolio indexing not completed
+- Full 48-project portfolio indexing in progress
 - Advanced MLA/BMM kernel implementations remain in development
 
 ### Planned Extensions
@@ -92,6 +94,7 @@ limited duration (15.2 minutes) but achieved measurable improvements:
 - Expand corpus to cover all 48 projects in portfolio
 - Integrate with VSCode extension and onedev toolchain
 - Add multi-modal search capabilities (code + comments + documentation)
+- Share the results!
 
 ## Conclusion
 
