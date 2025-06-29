@@ -1,0 +1,12 @@
+{
+  "projects": [
+    {
+      "name": "onedev",
+      "path": "/Users/williamtalcott/projects/onedev"
+    },
+    {
+      "name": "mojo-base",
+      "path": "/Users/williamtalcott/projects/mojo-base"
+    }
+  ]
+}
