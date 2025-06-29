@@ -1,0 +1,185 @@
+# Mojo-Base Project .gitignore
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Pixi environment management
+.pixi/
+pixi.lock
+
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Mojo specific files
+*.mojopkg
+*.mojo.o
+*.mojo.tmp
+*.mojocache
+*.mojo_cache/
+
+# MAX specific artifacts
+*.max
+max_build/
+max_cache/
+
+# Build artifacts
+build/
+target/
+out/
+bin/
+obj/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+
+# Log files
+*.log
+*.out
+*.err
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# LLVM and compiler artifacts
+*.ll
+*.bc
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+
+# Benchmark and profiling output
+*.prof
+*.pprof
+benchmark_results/
+profiling_output/
+
+# Documentation build
+docs/_build/
+docs/build/
+
+# AI/ML model files and data
+*.onnx
+*.pb
+*.pth
+*.pt
+*.h5
+*.pkl
+*.pickle
+models/
+data/
+datasets/
+checkpoints/
+
+# CUDA artifacts
+*.cubin
+*.fatbin
+*.ptx
+
+# Custom project ignores
+# Add any project-specific files or directories here
