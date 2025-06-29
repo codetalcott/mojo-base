@@ -1,0 +1,109 @@
+{
+  "extraction_timestamp": "2025-06-29T11:34:05.182217",
+  "extraction_duration_seconds": 0.226244,
+  "vectors_extracted": 2114,
+  "validation_results": {
+    "total_vectors": 2114,
+    "dimension_analysis": {
+      "unique_dimensions": [
+        128
+      ],
+      "dimension_distribution": {
+        "128": 2114
+      },
+      "consistent_dimensions": true
+    },
+    "magnitude_analysis": {
+      "mean_magnitude": 7.267519207443961,
+      "std_magnitude": 4.423125101950552,
+      "min_magnitude": 0.6399152874946594,
+      "max_magnitude": 23.115774154663086
+    },
+    "confidence_analysis": {
+      "mean_confidence": 1.0,
+      "std_confidence": 0.0,
+      "min_confidence": 1.0,
+      "max_confidence": 1.0,
+      "vectors_with_confidence": 2114
+    },
+    "context_type_analysis": {
+      "full_file": {
+        "count": 716,
+        "percentage": 33.86944181646168
+      },
+      "function": {
+        "count": 911,
+        "percentage": 43.09366130558184
+      },
+      "class": {
+        "count": 487,
+        "percentage": 23.03689687795648
+      }
+    },
+    "language_analysis": {
+      "typescript": {
+        "count": 2030,
+        "percentage": 96.02649006622516
+      },
+      "javascript": {
+        "count": 78,
+        "percentage": 3.6896877956480605
+      },
+      "python": {
+        "count": 6,
+        "percentage": 0.28382213812677387
+      }
+    },
+    "file_coverage": {
+      "unique_files": 716,
+      "vectors_per_file": 2.952513966480447
+    }
+  },
+  "coherence_analysis": {
+    "sample_size": 100,
+    "total_comparisons": 4950,
+    "overall_similarity": {
+      "mean": 0.4297650441135955,
+      "std": 0.17052885360298364,
+      "min": 0.03819572703358232,
+      "max": 0.897098365146562
+    },
+    "same_file_similarity": {
+      "count": 11,
+      "mean": 0.5244570692439433,
+      "std": 0.17186427777505695
+    },
+    "same_type_similarity": {
+      "count": 1807,
+      "mean": 0.5261134555493979,
+      "std": 0.1349424236547549
+    },
+    "different_similarity": {
+      "count": 3132,
+      "mean": 0.37384448480933974,
+      "std": 0.16381652679107442
+    }
+  },
+  "sample_corpus": {
+    "corpus_path": "/Users/williamtalcott/projects/mojo-base/data/real_vector_corpus.json",
+    "sample_size": 1000,
+    "file_size_mb": 5.975581169128418
+  },
+  "extraction_summary": {
+    "status": "SUCCESS",
+    "vector_count": 2114,
+    "unique_files": 716,
+    "context_types": [
+      "full_file",
+      "function",
+      "class"
+    ],
+    "languages": [
+      "typescript",
+      "javascript",
+      "python"
+    ],
+    "vector_dimensions": 128,
+    "quality_score": 100.0
+  }
+}

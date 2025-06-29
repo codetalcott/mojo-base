@@ -1,0 +1,50 @@
+{
+  "lambda_cloud": {
+    "instance_type": "gpu_1x_a100",
+    "region": "us-west-2",
+    "count": 2,
+    "ssh_key": "mojo-gpu-key",
+    "image": "pytorch_2_1_cuda_12_1"
+  },
+  "system": {
+    "mojo_version": "latest",
+    "cuda_version": "12.1",
+    "python_version": "3.11",
+    "dependencies": [
+      "numpy",
+      "torch",
+      "transformers",
+      "sentence-transformers"
+    ]
+  },
+  "semantic_search": {
+    "corpus_size": 100000,
+    "embedding_dim": 768,
+    "performance_target_ms": 20,
+    "cpu_baseline_ms": 12.7,
+    "gpu_target_ms": 5.0
+  },
+  "onedev_mcp": {
+    "enabled": true,
+    "tools_count": 69,
+    "max_overhead_ms": 5,
+    "portfolio_projects": 48
+  },
+  "monitoring": {
+    "metrics_collection": true,
+    "performance_dashboard": true,
+    "anomaly_detection": true,
+    "alert_thresholds": {
+      "latency_ms": 20,
+      "cpu_usage_percent": 90,
+      "gpu_usage_percent": 95,
+      "memory_usage_percent": 85
+    }
+  },
+  "production": {
+    "auto_scaling": true,
+    "load_balancing": true,
+    "health_checks": true,
+    "backup_strategy": "hybrid_cpu_fallback"
+  }
+}

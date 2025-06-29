@@ -1,0 +1,783 @@
+{
+  "analysis_timestamp": "2025-06-29T11:32:15.674979",
+  "analysis_duration_seconds": 0.089035,
+  "context_database": {
+    "path": "/Users/williamtalcott/projects/onedev/.onedev/context.db",
+    "schema": {
+      "tables": {
+        "project_metadata": {
+          "columns": [
+            {
+              "name": "project_id",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "name",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "path",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "last_indexed_at",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "context_version",
+              "type": "TEXT",
+              "not_null": 0
+            }
+          ],
+          "row_count": 1
+        },
+        "code_files": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "file_path",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "last_modified_at",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "checksum",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "language",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "size",
+              "type": "INTEGER",
+              "not_null": 0
+            }
+          ],
+          "row_count": 716
+        },
+        "sqlite_sequence": {
+          "columns": [
+            {
+              "name": "name",
+              "type": "",
+              "not_null": 0
+            },
+            {
+              "name": "seq",
+              "type": "",
+              "not_null": 0
+            }
+          ],
+          "row_count": 3
+        },
+        "code_vectors": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "file_id",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "code_snippet_hash",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "context_type",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "vector",
+              "type": "BLOB",
+              "not_null": 1
+            },
+            {
+              "name": "original_text",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "start_line",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "end_line",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "confidence",
+              "type": "REAL",
+              "not_null": 0
+            }
+          ],
+          "row_count": 2114
+        },
+        "dependency_graph": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "source_file_id",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "target_file_id",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "dependency_type",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "line_number",
+              "type": "INTEGER",
+              "not_null": 0
+            }
+          ],
+          "row_count": 0
+        },
+        "architectural_patterns": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "pattern_name",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "description",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "best_practices",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "defined_by",
+              "type": "TEXT",
+              "not_null": 0
+            }
+          ],
+          "row_count": 0
+        },
+        "pattern_instances": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "pattern_id",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "file_id",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "start_line",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "end_line",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "confidence",
+              "type": "REAL",
+              "not_null": 0
+            }
+          ],
+          "row_count": 0
+        },
+        "project_knowledge": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "title",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "content",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "category",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "url",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "last_updated_at",
+              "type": "INTEGER",
+              "not_null": 0
+            }
+          ],
+          "row_count": 22
+        },
+        "project_knowledge_fts": {
+          "columns": [
+            {
+              "name": "title",
+              "type": "",
+              "not_null": 0
+            },
+            {
+              "name": "content",
+              "type": "",
+              "not_null": 0
+            },
+            {
+              "name": "category",
+              "type": "",
+              "not_null": 0
+            },
+            {
+              "name": "url",
+              "type": "",
+              "not_null": 0
+            }
+          ],
+          "row_count": 22
+        },
+        "project_knowledge_fts_data": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "block",
+              "type": "BLOB",
+              "not_null": 0
+            }
+          ],
+          "row_count": 33
+        },
+        "project_knowledge_fts_idx": {
+          "columns": [
+            {
+              "name": "segid",
+              "type": "",
+              "not_null": 1
+            },
+            {
+              "name": "term",
+              "type": "",
+              "not_null": 1
+            },
+            {
+              "name": "pgno",
+              "type": "",
+              "not_null": 0
+            }
+          ],
+          "row_count": 31
+        },
+        "project_knowledge_fts_content": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "c0",
+              "type": "",
+              "not_null": 0
+            },
+            {
+              "name": "c1",
+              "type": "",
+              "not_null": 0
+            },
+            {
+              "name": "c2",
+              "type": "",
+              "not_null": 0
+            },
+            {
+              "name": "c3",
+              "type": "",
+              "not_null": 0
+            }
+          ],
+          "row_count": 22
+        },
+        "project_knowledge_fts_docsize": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "sz",
+              "type": "BLOB",
+              "not_null": 0
+            }
+          ],
+          "row_count": 22
+        },
+        "project_knowledge_fts_config": {
+          "columns": [
+            {
+              "name": "k",
+              "type": "",
+              "not_null": 1
+            },
+            {
+              "name": "v",
+              "type": "",
+              "not_null": 0
+            }
+          ],
+          "row_count": 1
+        },
+        "git_history": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "commit_hash",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "author_name",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "author_email",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "commit_timestamp",
+              "type": "INTEGER",
+              "not_null": 1
+            },
+            {
+              "name": "commit_message",
+              "type": "TEXT",
+              "not_null": 1
+            },
+            {
+              "name": "changed_files",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "diff_summary",
+              "type": "TEXT",
+              "not_null": 0
+            }
+          ],
+          "row_count": 0
+        },
+        "context_feedback": {
+          "columns": [
+            {
+              "name": "id",
+              "type": "INTEGER",
+              "not_null": 0
+            },
+            {
+              "name": "session_id",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "task_description",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "context_provided",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "effectiveness_rating",
+              "type": "REAL",
+              "not_null": 0
+            },
+            {
+              "name": "feedback_text",
+              "type": "TEXT",
+              "not_null": 0
+            },
+            {
+              "name": "feedback_timestamp",
+              "type": "INTEGER",
+              "not_null": 1
+            }
+          ],
+          "row_count": 0
+        }
+      },
+      "total_tables": 16
+    },
+    "vectors": {
+      "vector_tables": [
+        "code_vectors"
+      ],
+      "total_vectors": 2114,
+      "vector_details": {
+        "code_vectors": {
+          "vector_count": 2114,
+          "vector_columns": [
+            "vector"
+          ],
+          "sample_analysis": [
+            {
+              "dimensions": 128,
+              "magnitude": 9.837325096130371,
+              "mean": 0.6287152767181396,
+              "std": 0.6006295084953308
+            },
+            {
+              "dimensions": 128,
+              "magnitude": 9.784610748291016,
+              "mean": 0.6284798383712769,
+              "std": 0.5941134691238403
+            },
+            {
+              "dimensions": 128,
+              "magnitude": 12.263080596923828,
+              "mean": 0.8216605186462402,
+              "std": 0.706924557685852
+            },
+            {
+              "dimensions": 128,
+              "magnitude": 7.38786506652832,
+              "mean": 0.4133695363998413,
+              "std": 0.5055058598518372
+            },
+            {
+              "dimensions": 128,
+              "magnitude": 4.380025863647461,
+              "mean": 0.19967864453792572,
+              "std": 0.33167505264282227
+            }
+          ]
+        }
+      }
+    },
+    "code_content": {
+      "code_tables": [
+        "project_metadata",
+        "code_vectors",
+        "project_knowledge",
+        "project_knowledge_fts",
+        "context_feedback"
+      ],
+      "total_code_entries": 6387,
+      "file_types": {},
+      "content_summary": {
+        "project_metadata.context_version": {
+          "count": 1,
+          "sample_lengths": [
+            5
+          ],
+          "sample_previews": [
+            "1.0.0"
+          ]
+        },
+        "code_vectors.code_snippet_hash": {
+          "count": 2114,
+          "sample_lengths": [
+            32,
+            32,
+            32
+          ],
+          "sample_previews": [
+            "001f89d5b9931debba03960f87d9c1df",
+            "00465a1b539ccd3384c87d841d36b273",
+            "007556c051bec84dce72a0c8adc81d09"
+          ]
+        },
+        "code_vectors.context_type": {
+          "count": 2114,
+          "sample_lengths": [
+            5,
+            5,
+            5
+          ],
+          "sample_previews": [
+            "class",
+            "class",
+            "class"
+          ]
+        },
+        "code_vectors.original_text": {
+          "count": 2114,
+          "sample_lengths": [
+            4991,
+            4991,
+            4991
+          ],
+          "sample_previews": [
+            "/**\n * Quick check to count total tools in both unified and federated modes\n */\n\nimport { unifiedMCP...",
+            "async function checkToolsCount() {\n  console.log('\ud83d\udd0d Checking tool count in unified vs federated arch...",
+            "#!/usr/bin/env node\n\n/**\n * Cross-System Integration Test Runner\n * \n * Orchestrates the execution o..."
+          ]
+        },
+        "project_knowledge.content": {
+          "count": 22,
+          "sample_lengths": [
+            9348,
+            13595,
+            9348
+          ],
+          "sample_previews": [
+            "# Project Brain\n\nA development portfolio management system that automates project discovery, health ...",
+            "# CLAUDE.md\n\nThis file provides guidance to Claude Code (claude.ai/code) when working with the Proje...",
+            "# Project Brain\n\nA development portfolio management system that automates project discovery, health ..."
+          ]
+        },
+        "project_knowledge_fts.content": {
+          "count": 22,
+          "sample_lengths": [
+            9348,
+            13595,
+            9348
+          ],
+          "sample_previews": [
+            "# Project Brain\n\nA development portfolio management system that automates project discovery, health ...",
+            "# CLAUDE.md\n\nThis file provides guidance to Claude Code (claude.ai/code) when working with the Proje...",
+            "# Project Brain\n\nA development portfolio management system that automates project discovery, health ..."
+          ]
+        }
+      }
+    }
+  },
+  "portfolio_database": {
+    "database_path": "/Users/williamtalcott/projects/onedev/data/unified-portfolio.db",
+    "tables": [
+      "projects",
+      "conversations",
+      "sqlite_sequence",
+      "ideas",
+      "project_relationships",
+      "scan_history",
+      "insights",
+      "claude_log_analysis",
+      "claude_error_patterns",
+      "claude_error_occurrences",
+      "claude_health_snapshots",
+      "claude_monitoring_sessions",
+      "users",
+      "user_sessions",
+      "password_reset_tokens",
+      "auth_audit_log",
+      "user_settings",
+      "user_preferences",
+      "migrations",
+      "deployment_history",
+      "deployment_health_metrics"
+    ],
+    "projects": {
+      "count": 51,
+      "sample_data": [
+        [
+          "project-1750032556952-cv8tvj7ea",
+          "BunSetup",
+          null,
+          "/Users/williamtalcott/projects/BunSetup",
+          "node",
+          "development",
+          60.0,
+          null,
+          null,
+          "medium",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "private",
+          null,
+          "{\"hasPackageJson\":true,\"hasGit\":true,\"hasReadme\":false,\"fileCount\":13}",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16T00:09:16.932Z"
+        ],
+        [
+          "project-1750032556952-qh1tssnuh",
+          "Prompt Templates",
+          null,
+          "/Users/williamtalcott/projects/Prompt Templates",
+          "node",
+          "development",
+          80.0,
+          null,
+          null,
+          "medium",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "private",
+          null,
+          "{\"hasPackageJson\":true,\"hasGit\":true,\"hasReadme\":true,\"fileCount\":29}",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16T00:09:16.932Z"
+        ],
+        [
+          "project-1750032556952-0fbekfru5",
+          "TextShelf",
+          null,
+          "/Users/williamtalcott/projects/TextShelf",
+          "unknown",
+          "development",
+          40.0,
+          null,
+          null,
+          "medium",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "private",
+          null,
+          "{\"hasPackageJson\":false,\"hasGit\":false,\"hasReadme\":false,\"fileCount\":7}",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16T00:09:16.933Z"
+        ],
+        [
+          "project-1750032556952-eizbfatb2",
+          "_hyper_min",
+          null,
+          "/Users/williamtalcott/projects/_hyper_min",
+          "node",
+          "development",
+          80.0,
+          null,
+          null,
+          "medium",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "private",
+          null,
+          "{\"hasPackageJson\":true,\"hasGit\":true,\"hasReadme\":true,\"fileCount\":22}",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16T00:09:16.933Z"
+        ],
+        [
+          "project-1750032556952-d7zztt6oq",
+          "_hyperscript",
+          null,
+          "/Users/williamtalcott/projects/_hyperscript",
+          "node",
+          "development",
+          80.0,
+          null,
+          null,
+          "medium",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "private",
+          null,
+          "{\"hasPackageJson\":true,\"hasGit\":true,\"hasReadme\":true,\"fileCount\":20}",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16 00:09:16",
+          "2025-06-16T00:09:16.934Z"
+        ]
+      ]
+    },
+    "conversations_vector_columns": [
+      "vector"
+    ]
+  },
+  "summary": {
+    "vector_infrastructure_status": "EXISTS_WITH_DATA",
+    "total_vectors_found": 0,
+    "code_entries_found": 0,
+    "portfolio_projects_tracked": 0,
+    "integration_readiness": "READY_FOR_MOJO_INTEGRATION",
+    "recommended_next_steps": [
+      "Extract vector embeddings for validation",
+      "Design integration schema with Mojo search engine",
+      "Implement vector migration pipeline",
+      "Create real corpus from portfolio projects",
+      "Validate end-to-end semantic search"
+    ]
+  }
+}
