@@ -108,7 +108,7 @@ show_demo_info() {
     echo "  - Total latency: <10ms (target was <20ms)"
     echo "  - Error rate: 0% (perfect reliability)"
     echo ""
-    echo "🔥 Key Talking Points:"
+    echo "🔥 Key Points:"
     echo "  ✅ Real data vs simulated: 'This searches actual portfolio code'"
     echo "  ✅ Performance optimization: '6x faster with 128-dim vectors'"
     echo "  ✅ MCP integration: '1,319x speed improvement'"

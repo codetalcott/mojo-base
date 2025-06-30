@@ -154,7 +154,9 @@
                             <span class="font-mono text-success" x-text="lastSearch?.performance?.mcp_enhancement_ms + 'ms'"></span>
                         </div>
                     </div>
-                    <canvas id="performanceChart" class="mt-4 h-32"></canvas>
+                    <div class="mt-4 h-32 w-full">
+                        <canvas id="performanceChart" class="w-full h-full max-w-full"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -341,16 +343,42 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
+                            layout: {
+                                padding: {
+                                    left: 5,
+                                    right: 5,
+                                    top: 5,
+                                    bottom: 5
+                                }
+                            },
                             plugins: {
                                 legend: { display: false }
                             },
                             scales: {
                                 y: {
                                     beginAtZero: true,
-                                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                                    max: 12,
+                                    ticks: {
+                                        stepSize: 2,
+                                        font: { size: 10 }
+                                    },
+                                    grid: { 
+                                        color: 'rgba(255, 255, 255, 0.1)',
+                                        drawBorder: false
+                                    }
                                 },
                                 x: {
+                                    ticks: {
+                                        maxRotation: 0,
+                                        font: { size: 9 }
+                                    },
                                     grid: { display: false }
+                                }
+                            },
+                            elements: {
+                                bar: {
+                                    borderRadius: 2,
+                                    borderSkipped: false
                                 }
                             }
                         }
