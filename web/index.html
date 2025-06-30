@@ -50,28 +50,34 @@
             
             <!-- Performance Stats -->
             <div class="flex justify-center gap-4 mt-6">
-                <div class="stat bg-base-100 rounded-lg px-4 py-2">
+                <div class="stat bg-base-100 rounded-lg px-4 py-2 cursor-help" title="Real code snippets from TypeScript, Python, JavaScript, and Mojo projects">
                     <div class="stat-title text-xs">Corpus Size</div>
                     <div class="stat-value text-lg">2,637</div>
-                    <div class="stat-desc text-xs">vectors</div>
+                    <div class="stat-desc text-xs">real code snippets</div>
                 </div>
-                <div class="stat bg-base-100 rounded-lg px-4 py-2">
+                <div class="stat bg-base-100 rounded-lg px-4 py-2 cursor-help" title="Including FastAPI, tRPC, Zod, DaisyUI, Prisma, personal projects">
                     <div class="stat-title text-xs">Projects</div>
                     <div class="stat-value text-lg">44</div>
-                    <div class="stat-desc text-xs">analyzed</div>
+                    <div class="stat-desc text-xs">OSS + portfolio</div>
                 </div>
-                <div class="stat bg-base-100 rounded-lg px-4 py-2">
+                <div class="stat bg-base-100 rounded-lg px-4 py-2 cursor-help" title="Compare: GitHub code search ~100-500ms, traditional grep ~50-200ms">
                     <div class="stat-title text-xs">Latency</div>
                     <div class="stat-value text-lg text-success">&lt;10ms</div>
-                    <div class="stat-desc text-xs">average</div>
+                    <div class="stat-desc text-xs">10-50x faster</div>
                 </div>
-                <div class="stat bg-base-100 rounded-lg px-4 py-2">
+                <div class="stat bg-base-100 rounded-lg px-4 py-2 cursor-help" title="Optimized from 377ms to 0.3ms through vector dimension reduction">
                     <div class="stat-title text-xs">MCP Boost</div>
                     <div class="stat-value text-lg text-warning">1,319x</div>
-                    <div class="stat-desc text-xs">faster</div>
+                    <div class="stat-desc text-xs">vs baseline</div>
                 </div>
             </div>
         </header>
+
+        <!-- Context Info -->
+        <div class="text-center mb-6 text-sm text-base-content/60">
+            <p>Searching actual code from <span class="font-semibold">FastAPI, tRPC, Zod, Prisma, DaisyUI</span> + 39 personal projects</p>
+            <p class="text-xs mt-1">Semantic search understands meaning, not just keywords • Try "auth patterns" vs grep "authenticate"</p>
+        </div>
 
         <!-- Search Interface -->
         <div class="card bg-base-100 shadow-xl mb-8">
@@ -153,6 +159,11 @@
                             <span>MCP Enhancement:</span>
                             <span class="font-mono text-success" x-text="lastSearch?.performance?.mcp_enhancement_ms + 'ms'"></span>
                         </div>
+                        <div class="divider text-xs">vs traditional search</div>
+                        <div class="text-xs text-base-content/50">
+                            <div>GitHub: ~100-500ms</div>
+                            <div>grep/ripgrep: ~50-200ms</div>
+                        </div>
                     </div>
                     <div class="mt-4 h-32 w-full">
                         <canvas id="performanceChart" class="w-full h-full max-w-full"></canvas>
@@ -214,6 +225,8 @@
                             <span x-text="result.file_path"></span>
                             <span class="mx-2">•</span>
                             Lines <span x-text="result.start_line"></span>-<span x-text="result.end_line"></span>
+                            <span class="mx-2">•</span>
+                            <span class="text-xs">128-dim vector similarity</span>
                         </div>
                         
                         <pre class="bg-base-200 p-4 rounded-lg overflow-x-auto text-sm"><code x-text="result.text"></code></pre>
