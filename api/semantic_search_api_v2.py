@@ -82,12 +82,17 @@ async def startup_event():
     """Initialize the optimized search system on startup."""
     logger.info("🚀 Starting Mojo Semantic Search API v2.0 (Optimized)")
     
-    # Load portfolio corpus
-    if mcp_bridge.load_portfolio_corpus():
-        logger.info("✅ Portfolio corpus loaded (optimized)")
+    # Load portfolio corpus with initialization
+    try:
+        logger.info("Initializing MCP bridge and loading corpus...")
+        mcp_bridge.load_portfolio_corpus()  # This creates minimal corpus if needed
+        corpus_size = len(mcp_bridge.portfolio_corpus.get("vectors", [])) if mcp_bridge.portfolio_corpus else 0
+        logger.info(f"✅ Portfolio corpus loaded (optimized): {corpus_size} vectors")
         logger.info("⚡ MCP optimization enabled: <50ms target")
-    else:
-        logger.warning("⚠️ Failed to load portfolio corpus")
+    except Exception as e:
+        logger.error(f"⚠️ Failed to initialize corpus: {e}")
+        # Ensure we have something to work with
+        mcp_bridge._create_minimal_corpus()
 
 @app.get("/")
 async def root():
@@ -162,7 +167,7 @@ async def search(request: SearchRequest):
                     "local_results": mcp_bridge.search_local_corpus(request.query, request.max_results),
                     "mcp_enhancement": None,
                     "performance": {"total_latency_ms": 0, "mcp_enhancement_ms": 0},
-                    "metadata": {"corpus_size": len(mcp_bridge.portfolio_corpus.get("vectors", [])), "optimization_version": "2.0"}
+                    "metadata": {"corpus_size": len(mcp_bridge.portfolio_corpus.get("vectors", [])) if mcp_bridge.portfolio_corpus else 0, "optimization_version": "2.0"}
                 }
             )
         
