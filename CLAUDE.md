@@ -9,6 +9,7 @@ Real-time cross-project semantic code search powered by custom Mojo kernels and 
 ## Essential Resources
 
 ### LLM Context Files
+
 - `llms.txt` - Quick reference guide for LLM agents
 - `llms-full.txt` - Comprehensive context including onedev integration
 - `llms-mojo.txt` - Mojo-specific implementation patterns
@@ -28,6 +29,7 @@ pixi run mojo ../semantic_search_mvp.mojo
 The project uses onedev's 69 MCP tools across 9 domains. See `llm-onedev.txt` for integration guide.
 
 Key tools for semantic search:
+
 - `search_codebase_knowledge` - Semantic search across codebase
 - `assemble_context` - AI context generation with embeddings
 - `find_patterns` - Pattern detection and matching

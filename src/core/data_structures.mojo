@@ -4,9 +4,12 @@ High-performance, memory-efficient structures for code analysis.
 """
 
 from tensor import Tensor
-from utils.list import List
-from memory import DTypePointer
-from DType import DType
+from collections import List
+from memory import Pointer
+from builtin import DType
+from time import now
+from math import abs
+from algorithm import sort
 
 struct CodeSnippet:
     """
@@ -23,7 +26,7 @@ struct CodeSnippet:
     var embedding: Tensor[DType.float32]
     var similarity_score: Float32
     
-    fn __init__(inout self, 
+    fn __init__(out self, 
                 content: String,
                 file_path: String, 
                 project_name: String,
@@ -45,8 +48,10 @@ struct CodeSnippet:
         """Add a dependency to this code snippet."""
         self.dependencies.append(dependency)
     
-    fn set_embedding(inout self, embedding: Tensor[DType.float32]):
+    fn set_embedding(inout self, embedding: Tensor[DType.float32]) raises:
         """Set the semantic embedding for this code snippet."""
+        if embedding.num_elements() != 768:
+            raise Error("Embedding must be 768 dimensions")
         self.embedding = embedding
     
     fn update_similarity(inout self, score: Float32):
@@ -65,7 +70,7 @@ struct SearchResult:
     var project_relevance: Float32
     var final_score: Float32
     
-    fn __init__(inout self, snippet: CodeSnippet):
+    fn __init__(out self, snippet: CodeSnippet):
         """Initialize search result with base snippet."""
         self.snippet = snippet
         self.similarity_score = snippet.similarity_score
@@ -102,7 +107,7 @@ struct SearchContext:
     var preferred_languages: List[String]
     var search_focus: String  # "api", "patterns", "implementations", etc.
     
-    fn __init__(inout self, 
+    fn __init__(out self, 
                 current_project: String = "",
                 current_file: String = ""):
         """Initialize search context with current development state."""
@@ -129,24 +134,26 @@ struct EmbeddingCache:
     High-performance cache for code embeddings.
     Uses hash-based lookup for sub-millisecond retrieval.
     """
-    var cache_data: DTypePointer[DType.float32]
+    var cache_data: Pointer[Float32]
     var cache_keys: List[String]  
     var cache_size: Int
     var max_size: Int
     var hit_count: Int
     var miss_count: Int
     
-    fn __init__(inout self, max_size: Int = 10000):
+    fn __init__(out self, max_size: Int = 10000) raises:
         """Initialize embedding cache with specified capacity."""
+        if max_size <= 0:
+            raise Error("Cache size must be positive")
+        
         self.max_size = max_size
         self.cache_size = 0
         self.hit_count = 0
         self.miss_count = 0
         self.cache_keys = List[String]()
+        
         # Allocate aligned memory for embeddings (768 dims per entry)
-        self.cache_data = DTypePointer[DType.float32].aligned_alloc(
-            max_size * 768, 32  # 32-byte alignment for SIMD
-        )
+        self.cache_data = Pointer[Float32].alloc(max_size * 768)
     
     fn __del__(owned self):
         """Clean up allocated memory."""
@@ -158,6 +165,13 @@ struct EmbeddingCache:
         if total == 0:
             return 0.0
         return Float32(self.hit_count) / Float32(total)
+    
+    fn hash_string(self, key: String) -> Int:
+        """Simple hash function for string keys."""
+        var hash_value = 0
+        for i in range(len(key)):
+            hash_value = hash_value * 31 + int(ord(key[i]))
+        return hash_value % self.max_size
 
 struct CodeCorpus:
     """
@@ -170,7 +184,7 @@ struct CodeCorpus:
     var file_index: List[String]     # File paths for filtering
     var total_snippets: Int
     
-    fn __init__(inout self, initial_capacity: Int = 1000):
+    fn __init__(out self, initial_capacity: Int = 1000):
         """Initialize corpus with pre-allocated capacity."""
         self.snippets = List[CodeSnippet]()
         self.project_index = List[String]()

@@ -6,9 +6,10 @@ Ultra-fast SIMD-accelerated similarity computation for semantic search.
 from tensor import Tensor
 from algorithm import parallelize, vectorize
 from builtin import SIMD, simdwidthof
-from math import sqrt, rsqrt
+from math import sqrt, rsqrt, min, max
 from memory import DTypePointer, aligned_alloc
 from DType import DType
+from time import now
 
 @parameter
 struct BMMKernel:
@@ -30,29 +31,42 @@ struct BMMKernel:
     var corpus_size: Int
     var is_normalized: Bool
     
-    fn __init__(inout self, corpus_size: Int):
+    fn __init__(inout self, corpus_size: Int) raises:
         """Initialize BMM kernel with corpus capacity."""
+        if corpus_size <= 0:
+            raise Error("Corpus size must be positive")
+        
         self.corpus_size = corpus_size
         self.is_normalized = False
         
         # Allocate aligned memory for optimal SIMD performance
         let alignment = self.nelts * 4  # 4 bytes per float32
-        self.corpus_embeddings = DTypePointer[DType.float32].aligned_alloc(
-            corpus_size * self.embed_dim, alignment
-        )
-        self.corpus_norms = DTypePointer[DType.float32].aligned_alloc(
-            corpus_size, alignment
-        )
+        try:
+            self.corpus_embeddings = DTypePointer[DType.float32].aligned_alloc(
+                corpus_size * self.embed_dim, alignment
+            )
+            self.corpus_norms = DTypePointer[DType.float32].aligned_alloc(
+                corpus_size, alignment
+            )
+        except:
+            raise Error("Failed to allocate memory for BMM kernel")
     
     fn __del__(owned self):
         """Clean up allocated memory."""
         self.corpus_embeddings.free()
         self.corpus_norms.free()
     
-    fn load_corpus(inout self, embeddings: Tensor[DType.float32]):
+    fn load_corpus(inout self, embeddings: Tensor[DType.float32]) raises:
         """Load corpus embeddings and precompute norms."""
-        # Copy embeddings to aligned memory
-        for i in range(self.corpus_size):
+        # Validate input dimensions
+        if embeddings.shape()[0] > self.corpus_size:
+            raise Error("Input embeddings exceed corpus capacity")
+        if embeddings.shape()[1] != self.embed_dim:
+            raise Error("Embedding dimension mismatch")
+        
+        # Copy embeddings to aligned memory with bounds checking
+        let actual_corpus_size = min(embeddings.shape()[0], self.corpus_size)
+        for i in range(actual_corpus_size):
             for j in range(self.embed_dim):
                 let idx = i * self.embed_dim + j
                 self.corpus_embeddings.store(idx, embeddings[i, j])

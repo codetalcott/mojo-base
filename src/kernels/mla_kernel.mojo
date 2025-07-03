@@ -6,9 +6,11 @@ High-performance implementation optimized for semantic code understanding.
 from tensor import Tensor
 from algorithm import parallelize, vectorize
 from builtin import SIMD, simdwidthof
-from math import sqrt, exp
+from math import sqrt, exp, min, max
 from memory import DTypePointer
 from DType import DType
+from time import now
+from random import random_float64
 
 @parameter
 struct MLAKernel:
@@ -52,18 +54,20 @@ struct MLAKernel:
         self._create_syntax_mask()
     
     fn _initialize_weights(inout self):
-        """Initialize weights using Xavier/Glorot normal distribution."""
+        """Initialize weights using proper Xavier/Glorot normal distribution."""
         let scale = sqrt(2.0 / Float32(self.embed_dim))
         
-        # Simplified initialization - in practice would use proper random generation
+        # Proper Xavier initialization with random values
         for i in range(self.embed_dim):
             for j in range(self.embed_dim):
-                # Pseudo-random initialization (simplified)
-                let val = (Float32(i * j) / 1000.0) * scale
-                self.query_weights[i, j] = val
-                self.key_weights[i, j] = val * 1.1
-                self.value_weights[i, j] = val * 0.9
-                self.output_weights[i, j] = val * 1.05
+                # Use proper random initialization
+                let random_val = Float32(random_float64(-1.0, 1.0))
+                let xavier_val = random_val * scale
+                
+                self.query_weights[i, j] = xavier_val
+                self.key_weights[i, j] = xavier_val * Float32(random_float64(0.9, 1.1))
+                self.value_weights[i, j] = xavier_val * Float32(random_float64(0.9, 1.1))
+                self.output_weights[i, j] = xavier_val * Float32(random_float64(0.9, 1.1))
     
     fn _create_syntax_mask(inout self):
         """Create syntax-aware attention mask for code structure."""
@@ -80,7 +84,7 @@ struct MLAKernel:
     @parameter
     fn encode_sequence(self, 
                       input_tokens: Tensor[DType.float32],  # [seq_len, embed_dim]
-                      seq_len: Int) -> Tensor[DType.float32]:
+                      seq_len: Int) -> Tensor[DType.float32] raises:
         """
         Encode a sequence of code tokens into semantic embeddings.
         
@@ -91,6 +95,15 @@ struct MLAKernel:
         Returns:
             Encoded semantic embedding [embed_dim]
         """
+        # Input validation
+        if seq_len <= 0:
+            raise Error("Sequence length must be positive")
+        if seq_len > self.max_seq_len:
+            raise Error("Sequence length exceeds maximum allowed length")
+        if input_tokens.shape()[0] < seq_len:
+            raise Error("Input tensor is smaller than specified sequence length")
+        if input_tokens.shape()[1] != self.embed_dim:
+            raise Error("Input embedding dimension mismatch")
         # Step 1: Compute Q, K, V projections
         let queries = self._compute_projection(input_tokens, self.query_weights, seq_len)
         let keys = self._compute_projection(input_tokens, self.key_weights, seq_len)
@@ -109,8 +122,12 @@ struct MLAKernel:
     fn _compute_projection(self, 
                           input: Tensor[DType.float32],
                           weights: Tensor[DType.float32],
-                          seq_len: Int) -> Tensor[DType.float32]:
+                          seq_len: Int) -> Tensor[DType.float32] raises:
         """Compute matrix multiplication with SIMD optimization."""
+        # Bounds checking
+        if seq_len <= 0 or seq_len > input.shape()[0]:
+            raise Error("Invalid sequence length for projection")
+        
         var output = Tensor[DType.float32](seq_len, self.embed_dim)
         
         # Vectorized matrix multiplication
@@ -120,11 +137,19 @@ struct MLAKernel:
             fn compute_cols(j: Int):
                 var acc = SIMD[DType.float32, self.nelts](0)
                 
-                # Inner product with SIMD
+                # Inner product with SIMD and bounds checking
                 for k in range(0, self.embed_dim, self.nelts):
-                    let input_vec = input.simd_load[self.nelts](i * self.embed_dim + k)
-                    let weight_vec = weights.simd_load[self.nelts](k * self.embed_dim + j)
-                    acc += input_vec * weight_vec
+                    let remaining = min(self.nelts, self.embed_dim - k)
+                    if remaining == self.nelts:
+                        let input_vec = input.simd_load[self.nelts](i * self.embed_dim + k)
+                        let weight_vec = weights.simd_load[self.nelts](k * self.embed_dim + j)
+                        acc += input_vec * weight_vec
+                    else:
+                        # Handle remaining elements individually for safety
+                        for r in range(remaining):
+                            let input_val = input[i, k + r]
+                            let weight_val = weights[k + r, j]
+                            acc[0] += input_val * weight_val
                 
                 # Reduce and store
                 output[i, j] = acc.reduce_add()

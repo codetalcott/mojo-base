@@ -7,6 +7,8 @@ from tensor import Tensor
 from utils.list import List
 from memory import DTypePointer
 from DType import DType
+from time import now
+from math import min, abs
 from ..core.data_structures import CodeSnippet, SearchResult, SearchContext, CodeCorpus
 from ..kernels.mla_kernel import MLAKernel, create_optimized_mla_kernel
 from ..kernels.bmm_kernel import BMMKernel, create_bmm_kernel
@@ -215,10 +217,17 @@ struct SemanticSearchEngine:
         
         for i in range(num_tokens):
             # Hash word to embedding space (simplified)
-            let word_hash = hash(words[i]) % MLAKernel.embed_dim
+            let word_hash = self._simple_hash(words[i]) % MLAKernel.embed_dim
             tokens[i, word_hash] = 1.0
         
         return tokens
+    
+    fn _simple_hash(self, s: String) -> Int:
+        """Simple hash function for strings."""
+        var hash_value = 0
+        for i in range(len(s)):
+            hash_value = hash_value * 31 + int(ord(s[i]))
+        return abs(hash_value)
     
     fn _tokenize_query(self, query: String) -> Tensor[DType.float32]:
         """Tokenize natural language query."""
@@ -244,16 +253,39 @@ struct SemanticSearchEngine:
         result.context_relevance = 0.7  # Default context
     
     fn _sort_results_by_score(inout self, results: List[SearchResult]):
-        """Sort search results by final score (descending)."""
-        # Simple bubble sort - in production would use optimized sort
-        let n = len(results)
-        for i in range(n):
-            for j in range(0, n - i - 1):
-                if results[j].final_score < results[j + 1].final_score:
-                    # Swap results
-                    let temp = results[j]
-                    results[j] = results[j + 1]
-                    results[j + 1] = temp
+        """Sort search results by final score (descending) using quicksort."""
+        if len(results) <= 1:
+            return
+        
+        self._quicksort_results(results, 0, len(results) - 1)
+    
+    fn _quicksort_results(inout self, results: List[SearchResult], low: Int, high: Int):
+        """Quicksort implementation for production performance."""
+        if low < high:
+            let pivot = self._partition_results(results, low, high)
+            self._quicksort_results(results, low, pivot - 1)
+            self._quicksort_results(results, pivot + 1, high)
+    
+    fn _partition_results(inout self, results: List[SearchResult], low: Int, high: Int) -> Int:
+        """Partition function for quicksort."""
+        let pivot_score = results[high].final_score
+        var i = low - 1
+        
+        for j in range(low, high):
+            # Sort in descending order (higher scores first)
+            if results[j].final_score >= pivot_score:
+                i += 1
+                # Swap results[i] and results[j]
+                let temp = results[i]
+                results[i] = results[j]
+                results[j] = temp
+        
+        # Swap pivot to correct position
+        let temp = results[i + 1]
+        results[i + 1] = results[high]
+        results[high] = temp
+        
+        return i + 1
     
     fn get_performance_report(self) -> String:
         """Get comprehensive performance report."""
@@ -280,11 +312,11 @@ struct PerformanceTracker:
     
     fn start_search(inout self):
         """Mark start of search operation."""
-        self.current_search_start = time.now().to_float64()
+        self.current_search_start = now().to_float64()
     
     fn end_search(inout self, num_results: Int):
         """Mark end of search and update metrics."""
-        let search_time = time.now().to_float64() - self.current_search_start
+        let search_time = now().to_float64() - self.current_search_start
         self.total_searches += 1
         self.total_search_time += search_time
         
@@ -321,13 +353,13 @@ fn benchmark_full_search_pipeline(engine: SemanticSearchEngine, num_queries: Int
         "data validation patterns"
     ]
     
-    let start_time = time.now()
+    let start_time = now()
     
     for i in range(num_queries):
         let query = test_queries[i % len(test_queries)]
         let _ = engine.search(query, 10)
     
-    let end_time = time.now()
+    let end_time = now()
     let total_time = (end_time - start_time).to_float64()
     let avg_time = total_time / Float64(num_queries)
     
