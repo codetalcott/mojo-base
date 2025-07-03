@@ -105,6 +105,7 @@ class GPUAutotuner:
         # Base performance calculations
         compute_units = 72  # A10 has 72 SMs
         clock_speed_ghz = 1.695  # A10 boost clock
+        max_threads_per_block = 1024  # A10 GPU constraint
 
         # Calculate theoretical performance
         threads_per_sm = block_size

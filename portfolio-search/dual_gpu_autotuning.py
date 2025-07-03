@@ -7,7 +7,12 @@ Coordinate autotuning across 2 A10 GPUs simultaneously
 import asyncio
 import json
 import time
-import paramiko
+try:
+    import paramiko
+    PARAMIKO_AVAILABLE = True
+except ImportError:
+    PARAMIKO_AVAILABLE = False
+    print("⚠️  paramiko not available - SSH features disabled")
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass

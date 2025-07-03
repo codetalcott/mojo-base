@@ -8,6 +8,11 @@ from buffer.dimlist import DimList
 from algorithm import parallelize, vectorize
 from memory import UnsafePointer
 from math import sqrt
+
+# Define rsqrt function since it's not in the math module
+fn rsqrt(x: Float32) -> Float32:
+    """Reciprocal square root function."""
+    return 1.0 / sqrt(x)
 from sys import simdwidthof
 from gpu import (
     WARP_SIZE,
@@ -20,7 +25,6 @@ from gpu import (
 )
 from gpu.host import DeviceContext, FuncAttribute
 
-@parameter
 struct BMMKernel:
     """
     Batched Matrix Multiplication kernel optimized for similarity search.

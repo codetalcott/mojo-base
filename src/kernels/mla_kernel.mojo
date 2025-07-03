@@ -21,7 +21,6 @@ from gpu import (
 )
 from gpu.host import DeviceContext, FuncAttribute
 
-@parameter
 struct MLAKernel:
     """
     Multi-Head Latent Attention kernel optimized for code sequences.
