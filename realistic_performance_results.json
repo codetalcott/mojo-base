@@ -1,0 +1,30 @@
+{
+  "test_type": "realistic_semantic_search_performance",
+  "results": [
+    {
+      "embedding_time_ms": 8.5,
+      "search_time_ms": 4.2,
+      "total_query_time_ms": 12.7,
+      "total_execution_time_s": 1.6956679821014404,
+      "success": true
+    },
+    {
+      "embedding_time_ms": 8.5,
+      "search_time_ms": 4.2,
+      "total_query_time_ms": 12.7,
+      "total_execution_time_s": 0.578794002532959,
+      "success": true
+    },
+    {
+      "embedding_time_ms": 8.5,
+      "search_time_ms": 4.2,
+      "total_query_time_ms": 12.7,
+      "total_execution_time_s": 0.5807957649230957,
+      "success": true
+    }
+  ],
+  "summary": {
+    "successful_runs": 3,
+    "total_runs": 3
+  }
+}

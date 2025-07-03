@@ -1,0 +1,16 @@
+[workspace]
+authors = ["Wm Talcott <wtalcott@gmail.com>"]
+channels = ["https://conda.modular.com/max-nightly", "conda-forge"]
+name = "mojo-base"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+modular = ">=25.5.0.dev2025070207,<26"
+max-python = ">=25.5.0.dev2025070207,<26"
+numpy = ">=2.3.1,<3"
+requests = ">=2.32.4,<3"
+boto3 = ">=1.39.1,<2"
+paramiko = ">=3.5.1,<4"

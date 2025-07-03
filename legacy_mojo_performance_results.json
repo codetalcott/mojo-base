@@ -1,0 +1,132 @@
+[
+  {
+    "corpus_size": 1000,
+    "iterations": 3,
+    "successful_runs": 3,
+    "avg_latency_ms": 0.0012222222222222222,
+    "std_latency_ms": 0.0003849001794597506,
+    "min_latency_ms": 0.001,
+    "max_latency_ms": 0.0016666666666666668,
+    "all_results": [
+      {
+        "latency_ms": 0.0016666666666666668,
+        "total_time_s": 0.8852291107177734,
+        "success": true
+      },
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.659268856048584,
+        "success": true
+      },
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.6526179313659668,
+        "success": true
+      }
+    ]
+  },
+  {
+    "corpus_size": 5000,
+    "iterations": 3,
+    "successful_runs": 3,
+    "avg_latency_ms": 0.0012222222222222222,
+    "std_latency_ms": 0.0001924500897298752,
+    "min_latency_ms": 0.001,
+    "max_latency_ms": 0.0013333333333333333,
+    "all_results": [
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.6544749736785889,
+        "success": true
+      },
+      {
+        "latency_ms": 0.0013333333333333333,
+        "total_time_s": 0.6573989391326904,
+        "success": true
+      },
+      {
+        "latency_ms": 0.0013333333333333333,
+        "total_time_s": 0.6860742568969727,
+        "success": true
+      }
+    ]
+  },
+  {
+    "corpus_size": 10000,
+    "iterations": 3,
+    "successful_runs": 3,
+    "avg_latency_ms": 0.0013333333333333333,
+    "std_latency_ms": 0.0005773502691896258,
+    "min_latency_ms": 0.001,
+    "max_latency_ms": 0.002,
+    "all_results": [
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.6502170562744141,
+        "success": true
+      },
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.6623773574829102,
+        "success": true
+      },
+      {
+        "latency_ms": 0.002,
+        "total_time_s": 0.6596100330352783,
+        "success": true
+      }
+    ]
+  },
+  {
+    "corpus_size": 25000,
+    "iterations": 3,
+    "successful_runs": 3,
+    "avg_latency_ms": 0.0008888888888888889,
+    "std_latency_ms": 0.0001924500897298753,
+    "min_latency_ms": 0.0006666666666666666,
+    "max_latency_ms": 0.001,
+    "all_results": [
+      {
+        "latency_ms": 0.0006666666666666666,
+        "total_time_s": 0.6560378074645996,
+        "success": true
+      },
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.6638011932373047,
+        "success": true
+      },
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.6596100330352783,
+        "success": true
+      }
+    ]
+  },
+  {
+    "corpus_size": 50000,
+    "iterations": 3,
+    "successful_runs": 3,
+    "avg_latency_ms": 0.0011111111111111111,
+    "std_latency_ms": 0.0001924500897298752,
+    "min_latency_ms": 0.001,
+    "max_latency_ms": 0.0013333333333333333,
+    "all_results": [
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.6608128547668457,
+        "success": true
+      },
+      {
+        "latency_ms": 0.0013333333333333333,
+        "total_time_s": 0.6638939380645752,
+        "success": true
+      },
+      {
+        "latency_ms": 0.001,
+        "total_time_s": 0.6614761352539062,
+        "success": true
+      }
+    ]
+  }
+]

@@ -194,3 +194,6 @@ config_local.json
 
 # Temporary corpus data
 data/temp_*
+# pixi environments
+.pixi
+*.egg-info
