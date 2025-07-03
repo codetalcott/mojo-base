@@ -436,6 +436,32 @@ async def main():
     
     print(f"\n📋 Results available at: {results['results_file']}")
     print("🎉 Autotuning V2 complete - Real GPU performance data collected!")
+    
+    # Critical termination reminder
+    print("\n" + "="*60)
+    print("🚨 CRITICAL: LAMBDA INSTANCE TERMINATION REMINDER 🚨")
+    print("="*60)
+    print("💰 Your Lambda GPU instance is STILL RUNNING and BILLING!")
+    print("💸 Cost: ~$1.50/hour ($36/day if left running)")
+    print("")
+    print("✅ Autotuning is complete. Next steps:")
+    print("   1. Download results to your local machine")
+    print("   2. Verify all data is saved")
+    print("   3. TERMINATE the Lambda instance IMMEDIATELY")
+    print("")
+    print("🔧 Termination Steps:")
+    print("   1. Go to Lambda Labs dashboard")
+    print("   2. Navigate to your instances")
+    print("   3. Click TERMINATE (not just stop!)")
+    print("   4. Confirm termination")
+    print("")
+    print("📊 Results to download:")
+    print(f"   - {results['results_file']}")
+    print("   - Any additional logs or data files")
+    print("")
+    print("⚠️  FAILURE TO TERMINATE = CONTINUED BILLING!")
+    print("🎯 Set a phone reminder NOW to terminate in 30 minutes")
+    print("="*60)
 
 if __name__ == "__main__":
     asyncio.run(main())
