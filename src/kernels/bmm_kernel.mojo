@@ -3,13 +3,22 @@ Batched Matrix Multiplication (BMM) Kernel for Similarity Search.
 Ultra-fast SIMD-accelerated similarity computation for semantic search.
 """
 
-from tensor import Tensor
+from buffer.buffer import NDBuffer
+from buffer.dimlist import DimList
 from algorithm import parallelize, vectorize
-from builtin import SIMD, simdwidthof
-from math import sqrt, rsqrt, min, max
-from memory import DTypePointer, aligned_alloc
-from DType import DType
-from time import now
+from memory import UnsafePointer
+from math import sqrt
+from sys import simdwidthof
+from gpu import (
+    WARP_SIZE,
+    barrier,
+    block_dim,
+    block_idx,
+    global_idx,
+    lane_id,
+    thread_idx,
+)
+from gpu.host import DeviceContext, FuncAttribute
 
 @parameter
 struct BMMKernel:
@@ -26,12 +35,12 @@ struct BMMKernel:
     alias nelts = simdwidthof[DType.float32]()
     alias tile_size: Int = 64  # Tile size for cache optimization
     
-    var corpus_embeddings: DTypePointer[DType.float32]  # N x 768 matrix
-    var corpus_norms: DTypePointer[DType.float32]       # Precomputed L2 norms
+    var corpus_embeddings: UnsafePointer[Float32]  # N x 768 matrix
+    var corpus_norms: UnsafePointer[Float32]       # Precomputed L2 norms
     var corpus_size: Int
     var is_normalized: Bool
     
-    fn __init__(inout self, corpus_size: Int) raises:
+    fn __init__(out self, corpus_size: Int) raises:
         """Initialize BMM kernel with corpus capacity."""
         if corpus_size <= 0:
             raise Error("Corpus size must be positive")
@@ -40,13 +49,13 @@ struct BMMKernel:
         self.is_normalized = False
         
         # Allocate aligned memory for optimal SIMD performance
-        let alignment = self.nelts * 4  # 4 bytes per float32
+        var alignment = self.nelts * 4  # 4 bytes per float32
         try:
-            self.corpus_embeddings = DTypePointer[DType.float32].aligned_alloc(
-                corpus_size * self.embed_dim, alignment
+            self.corpus_embeddings = UnsafePointer[Float32].alloc(
+                corpus_size * self.embed_dim
             )
-            self.corpus_norms = DTypePointer[DType.float32].aligned_alloc(
-                corpus_size, alignment
+            self.corpus_norms = UnsafePointer[Float32].alloc(
+                corpus_size
             )
         except:
             raise Error("Failed to allocate memory for BMM kernel")
@@ -56,7 +65,7 @@ struct BMMKernel:
         self.corpus_embeddings.free()
         self.corpus_norms.free()
     
-    fn load_corpus(inout self, embeddings: Tensor[DType.float32]) raises:
+    fn load_corpus(mut self, embeddings: NDBuffer[_, 2, _, _]) raises:
         """Load corpus embeddings and precompute norms."""
         # Validate input dimensions
         if embeddings.shape()[0] > self.corpus_size:
@@ -65,10 +74,10 @@ struct BMMKernel:
             raise Error("Embedding dimension mismatch")
         
         # Copy embeddings to aligned memory with bounds checking
-        let actual_corpus_size = min(embeddings.shape()[0], self.corpus_size)
+        var actual_corpus_size = min(embeddings.shape()[0], self.corpus_size)
         for i in range(actual_corpus_size):
             for j in range(self.embed_dim):
-                let idx = i * self.embed_dim + j
+                var idx = i * self.embed_dim + j
                 self.corpus_embeddings.store(idx, embeddings[i, j])
         
         # Precompute L2 norms for normalization
@@ -76,7 +85,7 @@ struct BMMKernel:
         self.is_normalized = True
     
     @parameter
-    fn _precompute_norms(inout self):
+    fn _precompute_norms(mut self):
         """Precompute L2 norms for all corpus embeddings."""
         @parameter
         fn compute_norm(i: Int):
@@ -85,7 +94,7 @@ struct BMMKernel:
             # SIMD-accelerated norm computation
             @parameter
             fn accumulate_norm(j: Int):
-                let vec = self.corpus_embeddings.simd_load[self.nelts](
+                var vec = self.corpus_embeddings.simd_load[self.nelts](
                     i * self.embed_dim + j
                 )
                 norm_squared += (vec * vec).reduce_add()
@@ -93,7 +102,7 @@ struct BMMKernel:
             vectorize[self.nelts, accumulate_norm](self.embed_dim)
             
             # Store inverse norm for efficient division
-            let norm = sqrt(norm_squared)
+            var norm = sqrt(norm_squared)
             self.corpus_norms.store(i, rsqrt(norm_squared) if norm > 1e-8 else 0.0)
         
         parallelize[compute_norm](self.corpus_size)
@@ -237,7 +246,7 @@ struct BMMKernel:
     
     fn get_performance_metrics(self) -> String:
         """Return performance and memory usage statistics."""
-        let memory_usage_mb = (self.corpus_size * self.embed_dim * 4) / (1024 * 1024)
+        var memory_usage_mb = (self.corpus_size * self.embed_dim * 4) / (1024 * 1024)
         
         return (
             "BMM Kernel Stats:\n" +

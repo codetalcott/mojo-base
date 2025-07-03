@@ -3,14 +3,23 @@ Multi-Head Latent Attention (MLA) Kernel for Code Embeddings.
 High-performance implementation optimized for semantic code understanding.
 """
 
-from tensor import Tensor
+from buffer.buffer import NDBuffer
+from buffer.dimlist import DimList
 from algorithm import parallelize, vectorize
-from builtin import SIMD, simdwidthof
-from math import sqrt, exp, min, max
-from memory import DTypePointer
-from DType import DType
-from time import now
+from math import sqrt, exp
+from memory import UnsafePointer
+from sys import simdwidthof
 from random import random_float64
+from gpu import (
+    WARP_SIZE,
+    barrier,
+    block_dim,
+    block_idx,
+    global_idx,
+    lane_id,
+    thread_idx,
+)
+from gpu.host import DeviceContext, FuncAttribute
 
 @parameter
 struct MLAKernel:
@@ -30,46 +39,46 @@ struct MLAKernel:
     alias nelts = simdwidthof[DType.float32]()
     
     # Learned parameters
-    var query_weights: Tensor[DType.float32]     # [768, 768]
-    var key_weights: Tensor[DType.float32]       # [768, 768] 
-    var value_weights: Tensor[DType.float32]     # [768, 768]
-    var output_weights: Tensor[DType.float32]    # [768, 768]
+    var query_weights: NDBuffer[mut=False, _, 2, _, _]     # [768, 768]
+    var key_weights: NDBuffer[mut=False, _, 2, _, _]       # [768, 768] 
+    var value_weights: NDBuffer[mut=False, _, 2, _, _]     # [768, 768]
+    var output_weights: NDBuffer[mut=False, _, 2, _, _]    # [768, 768]
     
     # Attention mask for code structure (syntax-aware)
-    var syntax_attention_mask: Tensor[DType.bool]  # [512, 512]
+    var syntax_attention_mask: NDBuffer[mut=False, _, 2, _, _]  # [512, 512]
     
-    fn __init__(inout self):
+    fn __init__(out self):
         """Initialize MLA kernel with Xavier/Glorot initialization."""
-        # Initialize weight matrices
-        self.query_weights = Tensor[DType.float32](self.embed_dim, self.embed_dim)
-        self.key_weights = Tensor[DType.float32](self.embed_dim, self.embed_dim)
-        self.value_weights = Tensor[DType.float32](self.embed_dim, self.embed_dim)
-        self.output_weights = Tensor[DType.float32](self.embed_dim, self.embed_dim)
+        # Initialize weight matrices - these will need proper NDBuffer initialization
+        # self.query_weights = NDBuffer allocation
+        # self.key_weights = NDBuffer allocation  
+        # self.value_weights = NDBuffer allocation
+        # self.output_weights = NDBuffer allocation
         
         # Initialize syntax attention mask
-        self.syntax_attention_mask = Tensor[DType.bool](self.max_seq_len, self.max_seq_len)
+        # self.syntax_attention_mask = NDBuffer allocation
         
         # Xavier initialization for weights
         self._initialize_weights()
         self._create_syntax_mask()
     
-    fn _initialize_weights(inout self):
+    fn _initialize_weights(mut self):
         """Initialize weights using proper Xavier/Glorot normal distribution."""
-        let scale = sqrt(2.0 / Float32(self.embed_dim))
+        var scale = sqrt(2.0 / Float32(self.embed_dim))
         
         # Proper Xavier initialization with random values
         for i in range(self.embed_dim):
             for j in range(self.embed_dim):
                 # Use proper random initialization
-                let random_val = Float32(random_float64(-1.0, 1.0))
-                let xavier_val = random_val * scale
+                var random_val = Float32(random_float64(-1.0, 1.0))
+                var xavier_val = random_val * scale
                 
                 self.query_weights[i, j] = xavier_val
                 self.key_weights[i, j] = xavier_val * Float32(random_float64(0.9, 1.1))
                 self.value_weights[i, j] = xavier_val * Float32(random_float64(0.9, 1.1))
                 self.output_weights[i, j] = xavier_val * Float32(random_float64(0.9, 1.1))
     
-    fn _create_syntax_mask(inout self):
+    fn _create_syntax_mask(mut self):
         """Create syntax-aware attention mask for code structure."""
         # Initialize all positions as valid
         for i in range(self.max_seq_len):
@@ -81,10 +90,11 @@ struct MLAKernel:
         # - Local attention for statement sequences  
         # - Global attention for imports/declarations
     
-    @parameter
-    fn encode_sequence(self, 
-                      input_tokens: Tensor[DType.float32],  # [seq_len, embed_dim]
-                      seq_len: Int) -> Tensor[DType.float32] raises:
+    fn encode_sequence[
+        mut: Bool = False
+    ](self, 
+      input_tokens: NDBuffer[mut, _, 2, _, _],  # [seq_len, embed_dim]
+      seq_len: Int) -> NDBuffer[mut, _, 2, _, _] raises:
         """
         Encode a sequence of code tokens into semantic embeddings.
         
