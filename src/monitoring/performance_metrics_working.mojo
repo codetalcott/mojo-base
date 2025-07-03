@@ -1,5 +1,5 @@
 """
-Simple Performance Monitoring and Metrics Collection
+Working Performance Monitoring and Metrics Collection
 Real-time monitoring for hybrid CPU/GPU semantic search system
 """
 
@@ -37,6 +37,9 @@ fn collect_search_metrics(
         print("  ✅ Performance target met")
     else:
         print("  ⚠️  Performance target exceeded")
+    
+    # Backend efficiency metrics
+    calculate_backend_efficiency(backend, corpus_size, latency_ms)
 
 fn calculate_backend_efficiency(backend: String, corpus_size: Int, latency_ms: Float64):
     """Calculate backend-specific efficiency metrics."""
@@ -70,15 +73,35 @@ fn system_health_check(cpu_usage: Float64, memory_usage: Float64, gpu_utilizatio
     print("  - Memory usage:", memory_usage, "%")
     print("  - GPU utilization:", gpu_utilization, "%")
     
-    # Simple health status
+    # Health status determination
+    var health_status = "Healthy"
+    
+    if cpu_usage > 80.0 or memory_usage > 80.0 or gpu_utilization > 80.0:
+        health_status = "Warning"
+    
     if cpu_usage > 95.0 or memory_usage > 95.0 or gpu_utilization > 95.0:
-        print("\n🚨 System Health Status: Critical")
-        print("🚨 Critical Issues detected")
-    elif cpu_usage > 80.0 or memory_usage > 80.0 or gpu_utilization > 80.0:
-        print("\n⚠️  System Health Status: Warning")
-        print("⚠️  High resource usage detected")
-    else:
-        print("\n✅ System Health Status: Healthy")
+        health_status = "Critical"
+    
+    print("\n🎯 System Health Status:", health_status)
+    
+    # Provide recommendations
+    if health_status == "Warning":
+        print("⚠️  Recommendations:")
+        if cpu_usage > 80.0:
+            print("  - Consider CPU optimization or scaling")
+        if memory_usage > 80.0:
+            print("  - Monitor memory leaks or increase RAM")
+        if gpu_utilization > 80.0:
+            print("  - Consider GPU load balancing")
+    
+    elif health_status == "Critical":
+        print("🚨 Critical Issues:")
+        if cpu_usage > 95.0:
+            print("  - CPU bottleneck detected")
+        if memory_usage > 95.0:
+            print("  - Memory exhaustion risk")
+        if gpu_utilization > 95.0:
+            print("  - GPU overutilization")
 
 fn onedev_mcp_performance_analysis(
     mcp_tool_calls: Int,
@@ -95,14 +118,25 @@ fn onedev_mcp_performance_analysis(
     print("  - Success rate:", mcp_success_rate * 100.0, "%")
     
     # Performance evaluation
+    var mcp_performance = "Good"
+    
+    if mcp_latency_ms > 100.0 or mcp_success_rate < 0.95:
+        mcp_performance = "Needs Improvement"
+    
     if mcp_latency_ms > 500.0 or mcp_success_rate < 0.90:
-        print("🎯 MCP Performance Rating: Poor")
-        print("💡 Optimization needed")
-    elif mcp_latency_ms > 100.0 or mcp_success_rate < 0.95:
-        print("🎯 MCP Performance Rating: Needs Improvement")
-        print("💡 Some optimization suggested")
-    else:
-        print("🎯 MCP Performance Rating: Good")
+        mcp_performance = "Poor"
+    
+    print("🎯 MCP Performance Rating:", mcp_performance)
+    
+    # Provide optimization suggestions
+    if mcp_performance != "Good":
+        print("💡 Optimization Suggestions:")
+        if mcp_latency_ms > 100.0:
+            print("  - Optimize MCP tool response times")
+            print("  - Consider caching frequently used data")
+        if mcp_success_rate < 0.95:
+            print("  - Investigate MCP tool failures")
+            print("  - Implement better error handling")
 
 fn generate_performance_report(
     total_searches: Int,
@@ -121,18 +155,28 @@ fn generate_performance_report(
     print("  - Backend distribution:", backend_distribution)
     
     # Performance grade calculation
+    var performance_grade = "A"
+    
+    if avg_latency > 20.0 or hit_rate < 0.80:
+        performance_grade = "B"
+    
+    if avg_latency > 50.0 or hit_rate < 0.60:
+        performance_grade = "C"
+    
     if avg_latency > 100.0 or hit_rate < 0.40:
-        print("\n🏆 Overall Performance Grade: D")
-        print("📝 Significant improvement needed")
-    elif avg_latency > 50.0 or hit_rate < 0.60:
-        print("\n🏆 Overall Performance Grade: C")
-        print("📝 Moderate improvement needed")
-    elif avg_latency > 20.0 or hit_rate < 0.80:
-        print("\n🏆 Overall Performance Grade: B")
-        print("📝 Minor improvements suggested")
-    else:
-        print("\n🏆 Overall Performance Grade: A")
-        print("📝 Excellent performance!")
+        performance_grade = "D"
+    
+    print("\n🏆 Overall Performance Grade:", performance_grade)
+    
+    # Recommendations based on grade
+    if performance_grade != "A":
+        print("\n📝 Improvement Recommendations:")
+        if avg_latency > 20.0:
+            print("  - Optimize search algorithms")
+            print("  - Consider GPU acceleration")
+        if hit_rate < 0.80:
+            print("  - Improve caching strategies")
+            print("  - Increase cache size if memory allows")
 
 # Test performance monitoring
 fn test_performance_monitoring():
@@ -148,9 +192,6 @@ fn test_performance_monitoring():
         12.7,
         4.3
     )
-    
-    # Test backend efficiency
-    calculate_backend_efficiency("GPU_Autotuned", 50000, 8.2)
     
     # Test system health check
     system_health_check(65.2, 78.5, 23.1)

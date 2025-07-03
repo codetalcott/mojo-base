@@ -1,7 +1,9 @@
 """
-Core data structures for Mojo Semantic Search Engine.
-Uses only documented Mojo features from official documentation.
+Modern Core Data Structures for Mojo Semantic Search Engine.
+Updated for Mojo 25.4.0 compatibility with proper syntax and copy semantics.
 """
+
+from memory import UnsafePointer
 
 struct CodeSnippet:
     """Represents a code snippet with metadata."""
@@ -23,7 +25,17 @@ struct CodeSnippet:
         self.line_end = 0
         self.similarity_score = 0.0
     
-    fn update_similarity(inout self, score: Float32):
+    fn __copyinit__(out self, existing: Self):
+        """Copy constructor for CodeSnippet."""
+        self.content = existing.content
+        self.file_path = existing.file_path
+        self.project_name = existing.project_name
+        self.function_name = existing.function_name
+        self.line_start = existing.line_start
+        self.line_end = existing.line_end
+        self.similarity_score = existing.similarity_score
+    
+    fn update_similarity(mut self, score: Float32):
         """Update similarity score for ranking."""
         self.similarity_score = score
 
@@ -45,7 +57,16 @@ struct SearchResult:
         self.project_relevance = 0.0
         self.final_score = 0.0
     
-    fn calculate_final_score(inout self):
+    fn __copyinit__(out self, existing: Self):
+        """Copy constructor for SearchResult."""
+        self.snippet = existing.snippet
+        self.similarity_score = existing.similarity_score
+        self.context_relevance = existing.context_relevance
+        self.recency_boost = existing.recency_boost
+        self.project_relevance = existing.project_relevance
+        self.final_score = existing.final_score
+    
+    fn calculate_final_score(mut self):
         """Calculate final ranking score using weighted combination."""
         self.final_score = (
             self.similarity_score * 0.4 +
@@ -66,7 +87,19 @@ struct SearchContext:
         self.current_file = current_file
         self.search_focus = "general"
     
-    fn set_focus(inout self, focus: String):
+    fn __init__(out self):
+        """Initialize search context with defaults."""
+        self.current_project = ""
+        self.current_file = ""
+        self.search_focus = "general"
+    
+    fn __copyinit__(out self, existing: Self):
+        """Copy constructor for SearchContext."""
+        self.current_project = existing.current_project
+        self.current_file = existing.current_file
+        self.search_focus = existing.search_focus
+    
+    fn set_focus(mut self, focus: String):
         """Set search focus."""
         self.search_focus = focus
 
@@ -77,11 +110,18 @@ struct PerformanceTracker:
     var average_results_per_search: Float32
     
     fn __init__(out self):
+        """Initialize performance tracker."""
         self.total_searches = 0
         self.total_search_time = 0.0
         self.average_results_per_search = 0.0
     
-    fn record_search(inout self, search_time: Float64, num_results: Int):
+    fn __copyinit__(out self, existing: Self):
+        """Copy constructor for PerformanceTracker."""
+        self.total_searches = existing.total_searches
+        self.total_search_time = existing.total_search_time
+        self.average_results_per_search = existing.average_results_per_search
+    
+    fn record_search(mut self, search_time: Float64, num_results: Int):
         """Record a search operation."""
         self.total_searches += 1
         self.total_search_time += search_time
@@ -98,6 +138,64 @@ struct PerformanceTracker:
         if self.total_searches > 0:
             return self.total_search_time / Float64(self.total_searches)
         return 0.0
+
+struct CodeCorpus:
+    """Manages a collection of code snippets with embeddings."""
+    var snippets: UnsafePointer[CodeSnippet]
+    var embeddings: UnsafePointer[Float32]  # Flattened embeddings matrix
+    var capacity: Int
+    var size: Int
+    var embed_dim: Int
+    
+    fn __init__(out self, capacity: Int, embed_dim: Int = 768) raises:
+        """Initialize code corpus with specified capacity."""
+        if capacity <= 0:
+            raise Error("Corpus capacity must be positive")
+        if embed_dim <= 0:
+            raise Error("Embedding dimension must be positive")
+        
+        self.capacity = capacity
+        self.size = 0
+        self.embed_dim = embed_dim
+        
+        # Allocate memory for snippets and embeddings
+        self.snippets = UnsafePointer[CodeSnippet].alloc(capacity)
+        self.embeddings = UnsafePointer[Float32].alloc(capacity * embed_dim)
+        
+        # Initialize embeddings to zero
+        for i in range(capacity * embed_dim):
+            self.embeddings[i] = 0.0
+    
+    fn __del__(owned self):
+        """Clean up allocated memory."""
+        self.snippets.free()
+        self.embeddings.free()
+    
+    fn add_snippet(mut self, snippet: CodeSnippet, embedding: UnsafePointer[Float32]) raises -> Bool:
+        """Add a code snippet with its embedding to the corpus."""
+        if self.size >= self.capacity:
+            return False
+        
+        # Store snippet (using copy constructor)
+        self.snippets[self.size] = snippet
+        
+        # Store embedding
+        var offset = self.size * self.embed_dim
+        for i in range(self.embed_dim):
+            self.embeddings[offset + i] = embedding[i]
+        
+        self.size += 1
+        return True
+    
+    fn get_snippet(self, index: Int) -> CodeSnippet:
+        """Get snippet at specified index."""
+        return self.snippets[index]
+    
+    fn get_embedding(self, index: Int, output: UnsafePointer[Float32]):
+        """Get embedding at specified index."""
+        var offset = index * self.embed_dim
+        for i in range(self.embed_dim):
+            output[i] = self.embeddings[offset + i]
 
 # Hash function for production use
 fn simple_hash(s: String) -> Int:
@@ -139,3 +237,55 @@ fn validate_matrix_dimensions(rows: Int, cols: Int) raises:
         raise Error("Matrix dimensions must be positive")
     if rows > 100000 or cols > 100000:
         raise Error("Matrix dimensions exceed practical limits")
+
+# Test the data structures
+fn test_data_structures():
+    """Test the modernized data structures."""
+    print("🧪 Testing Modern Data Structures")
+    print("=================================")
+    
+    try:
+        # Test CodeSnippet
+        var snippet = CodeSnippet("def hello(): print('hi')", "test.py", "test_proj")
+        snippet.update_similarity(0.95)
+        print("✅ CodeSnippet: Created and updated similarity score")
+        
+        # Test SearchResult
+        var result = SearchResult(snippet)
+        result.context_relevance = 0.8
+        result.recency_boost = 0.7
+        result.project_relevance = 0.9
+        result.calculate_final_score()
+        print("✅ SearchResult: Created and calculated final score:", result.final_score)
+        
+        # Test SearchContext
+        var context = SearchContext("main_project", "src/main.py")
+        context.set_focus("authentication")
+        print("✅ SearchContext: Created and set focus")
+        
+        # Test PerformanceTracker
+        var tracker = PerformanceTracker()
+        tracker.record_search(0.025, 15)
+        tracker.record_search(0.030, 12)
+        var avg_time = tracker.get_average_time()
+        print("✅ PerformanceTracker: Recorded searches, avg time:", avg_time)
+        
+        # Test CodeCorpus
+        var corpus = CodeCorpus(100, 768)
+        var test_embedding = UnsafePointer[Float32].alloc(768)
+        for i in range(768):
+            test_embedding[i] = Float32(i) / 768.0
+        
+        var added = corpus.add_snippet(snippet, test_embedding)
+        print("✅ CodeCorpus: Added snippet, success:", added)
+        
+        test_embedding.free()
+        
+        print("✅ All data structures working correctly!")
+        
+    except e:
+        print("❌ Data structures test failed:", e)
+
+fn main():
+    """Test the modern data structures."""
+    test_data_structures()
