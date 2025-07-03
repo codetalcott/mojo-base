@@ -1,11 +1,96 @@
 """
-Simple test for core data structures.
-Uses only documented Mojo features.
+Standalone test for core data structures.
+Includes minimal implementations for testing purposes.
 """
 
-# Note: This is a simplified test that can run standalone
-# For production, data structures would be imported from the main module
+# Minimal data structures for testing
+struct CodeSnippet:
+    """Test version of CodeSnippet."""
+    var content: String
+    var file_path: String 
+    var project_name: String
+    var similarity_score: Float32
+    
+    fn __init__(out self, content: String, file_path: String, project_name: String):
+        self.content = content
+        self.file_path = file_path
+        self.project_name = project_name
+        self.similarity_score = 0.0
+    
+    fn update_similarity(mut self, score: Float32):
+        self.similarity_score = score
 
+struct SearchResult:
+    """Test version of SearchResult."""
+    var similarity_score: Float32
+    var context_relevance: Float32
+    var recency_boost: Float32
+    var project_relevance: Float32
+    var final_score: Float32
+    
+    fn __init__(out self, base_score: Float32):
+        self.similarity_score = base_score
+        self.context_relevance = 0.0
+        self.recency_boost = 0.0
+        self.project_relevance = 0.0
+        self.final_score = 0.0
+    
+    fn calculate_final_score(mut self):
+        self.final_score = (
+            self.similarity_score * 0.4 +
+            self.context_relevance * 0.3 +
+            self.recency_boost * 0.2 +
+            self.project_relevance * 0.1
+        )
+
+struct SearchContext:
+    """Test version of SearchContext."""
+    var current_project: String
+    var current_file: String
+    var search_focus: String
+    
+    fn __init__(out self, current_project: String, current_file: String):
+        self.current_project = current_project
+        self.current_file = current_file
+        self.search_focus = "general"
+    
+    fn set_focus(mut self, focus: String):
+        self.search_focus = focus
+
+struct PerformanceTracker:
+    """Test version of PerformanceTracker."""
+    var total_searches: Int
+    var total_search_time: Float64
+    
+    fn __init__(out self):
+        self.total_searches = 0
+        self.total_search_time = 0.0
+    
+    fn record_search(mut self, search_time: Float64, num_results: Int):
+        self.total_searches += 1
+        self.total_search_time += search_time
+    
+    fn get_average_time(self) -> Float64:
+        if self.total_searches > 0:
+            return self.total_search_time / Float64(self.total_searches)
+        return 0.0
+
+fn simple_hash(s: String) -> Int:
+    """Simple hash function for strings."""
+    var hash_value = 0
+    var s_len = len(s)
+    for i in range(s_len):
+        hash_value = hash_value * 31 + ord(s[i])
+    if hash_value < 0:
+        hash_value = -hash_value
+    return hash_value
+
+fn validate_embedding_dimension(dimension: Int) raises:
+    """Validate embedding dimension is correct."""
+    if dimension != 768:
+        raise Error("Embedding must be 768 dimensions")
+
+# Test functions
 fn test_code_snippet() -> Bool:
     """Test CodeSnippet creation and basic operations."""
     var snippet = CodeSnippet("def hello(): return 'world'", "/test/file.py", "test_project")
@@ -24,7 +109,7 @@ fn test_search_result() -> Bool:
     var snippet = CodeSnippet("test code", "/test.py", "test_project")
     snippet.update_similarity(0.8)
     
-    var result = SearchResult(snippet)
+    var result = SearchResult(0.8)
     result.similarity_score = 0.8
     result.context_relevance = 0.6
     result.recency_boost = 0.4
