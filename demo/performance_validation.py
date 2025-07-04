@@ -73,7 +73,12 @@ class Benchmark:
             # Make API request
             response = requests.post(
                 f"{self.api_url}/search",
-                json={"query": query, "max_results": 10, "include_mcp": True, "use_cache": True},
+                json={
+                    "query": query,
+                    "max_results": 10,
+                    "include_mcp": True,
+                    "use_cache": True,
+                },
                 timeout=5.0,
             )
 
