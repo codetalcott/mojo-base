@@ -22,7 +22,7 @@ class PortfolioCorpusBuilder:
     """Build comprehensive corpus from all portfolio projects."""
     
     def __init__(self):
-        self.projects_root = "/Users/williamtalcott/projects"
+        self.projects_root = os.path.expanduser("~/projects")
         self.onedev_corpus_path = "<project-root>/data/real_vector_corpus.json"
         self.output_corpus_path = "<project-root>/data/portfolio_corpus.json"
         self.discovered_projects = []
@@ -329,7 +329,7 @@ class PortfolioCorpusBuilder:
         return {
             "id": snippet_id,
             "text": text.strip(),
-            "file_path": str(file_path.relative_to(Path("/Users/williamtalcott/projects"))),
+            "file_path": str(file_path.relative_to(Path(self.projects_root))),
             "context_type": context_type,
             "language": language,
             "project": project_name,

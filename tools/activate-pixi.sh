@@ -7,11 +7,11 @@ echo "=================================================="
 cd <project-root>/portfolio-search
 
 # Set environment variables from pixi shell-hook
-export PATH="<project-root>/portfolio-search/.pixi/envs/default/bin:/Users/williamtalcott/.pixi/bin:$PATH"
+export PATH="<project-root>/portfolio-search/.pixi/envs/default/bin:$HOME/.pixi/bin:$PATH"
 export CONDA_PREFIX="<project-root>/portfolio-search/.pixi/envs/default"
 export PIXI_PROJECT_NAME="portfolio-search"
 export PIXI_IN_SHELL="1"
-export PIXI_EXE="/Users/williamtalcott/.pixi/bin/pixi"
+export PIXI_EXE="$HOME/.pixi/bin/pixi"
 export PIXI_PROJECT_ROOT="<project-root>/portfolio-search"
 export PIXI_PROJECT_VERSION="0.1.0"
 export PIXI_PROJECT_MANIFEST="<project-root>/portfolio-search/pixi.toml"

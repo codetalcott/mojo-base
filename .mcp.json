@@ -2,8 +2,8 @@
   "mcpServers": {
     "project-brain": {
       "command": "node", 
-      "args": ["/Users/williamtalcott/projects/onedev/dist/infrastructure/mcp/unified-mcp-main-v2.js"],
-      "cwd": "/Users/williamtalcott/projects/onedev"
+      "args": ["~/projects/onedev/dist/infrastructure/mcp/unified-mcp-main-v2.js"],
+      "cwd": "~/projects/onedev"
     }
   }
 }
