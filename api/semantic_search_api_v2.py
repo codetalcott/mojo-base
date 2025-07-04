@@ -16,12 +16,15 @@ import os
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
-# Add project root to path
-project_root = Path(__file__).parent.parent
-sys.path.append(str(project_root))
-
-# Use optimized MCP bridge
-from src.integration.mcp_optimized_bridge import MCPOptimizedBridge
+# Add project root to path (for cross-project compatibility)
+try:
+    # Try relative import first (when used as package)
+    from src.integration.mcp_optimized_bridge import MCPOptimizedBridge
+except ImportError:
+    # Fallback to path manipulation (for standalone usage)
+    project_root = Path(__file__).parent.parent
+    sys.path.append(str(project_root))
+    from src.integration.mcp_optimized_bridge import MCPOptimizedBridge
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

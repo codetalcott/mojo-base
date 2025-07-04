@@ -2,6 +2,15 @@
 
 Real-time cross-project semantic code search powered by MAX Graph API and custom Mojo kernels.
 
+## ⚠️ Experimental Status
+
+**This is an experimental research project** exploring cutting-edge Mojo language features and MAX Graph optimizations. While the code demonstrates excellent performance characteristics (sub-2ms search latency), it should be considered:
+
+- **Research/Educational**: Showcasing Mojo's capabilities and MAX Graph integration
+- **Rapidly Evolving**: Mojo language and MAX API are still in active development  
+- **API Unstable**: Expect breaking changes as the ecosystem matures
+- **Use Caution**: Not recommended for production systems without thorough testing
+
 ## Quick Start
 
 ```bash
@@ -97,8 +106,8 @@ let results = search_portfolio("database connections", 10)
 
 | Implementation | Latency | Throughput | Use Case |
 |---------------|---------|------------|----------|
-| MAX Graph | 1.8ms | 500k vectors/sec | Production |
+| MAX Graph | 1.8ms | 500k vectors/sec | Experimental |
 | Legacy Mojo | 12.7ms | 75k vectors/sec | Fallback |
 | Traditional | 100-500ms | 2k vectors/sec | Baseline |
 
-**Status**: Production ready with working web interface and comprehensive test coverage.
+**Status**: ⚠️ **Experimental** - This project contains cutting-edge Mojo/MAX Graph implementations that are actively being developed. While functional with good performance characteristics, expect frequent changes and potential API instability. Use with caution in production environments.

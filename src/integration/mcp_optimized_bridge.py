@@ -21,13 +21,37 @@ logger = logging.getLogger(__name__)
 class MCPOptimizedBridge:
     """Optimized MCP bridge with native Python integration."""
     
-    def __init__(self):
-        # Get actual project root
-        current_file = Path(__file__)
-        self.mojo_project_path = current_file.parent.parent.parent
+    def __init__(self, 
+                 corpus_path: Optional[str] = None,
+                 onedev_path: Optional[str] = None,
+                 project_root: Optional[str] = None):
+        """
+        Initialize MCP bridge with configurable paths.
         
-        self.portfolio_corpus_path = self.mojo_project_path / "data" / "portfolio_corpus.json"
-        self.onedev_project_path = self.mojo_project_path.parent / "onedev"  # Fallback path
+        Args:
+            corpus_path: Path to corpus JSON file (optional)
+            onedev_path: Path to onedev project (optional) 
+            project_root: Project root directory (optional, auto-detected if None)
+        """
+        # Configure project paths
+        if project_root:
+            self.mojo_project_path = Path(project_root)
+        else:
+            # Auto-detect: assume we're in src/integration/
+            current_file = Path(__file__)
+            self.mojo_project_path = current_file.parent.parent.parent
+        
+        # Configure corpus path
+        if corpus_path:
+            self.portfolio_corpus_path = Path(corpus_path)
+        else:
+            self.portfolio_corpus_path = self.mojo_project_path / "data" / "portfolio_corpus.json"
+        
+        # Configure onedev path
+        if onedev_path:
+            self.onedev_project_path = Path(onedev_path)
+        else:
+            self.onedev_project_path = self.mojo_project_path.parent / "onedev"  # Fallback path
         
         # Performance optimizations
         self.portfolio_corpus = None

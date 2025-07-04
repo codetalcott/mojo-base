@@ -17,9 +17,14 @@ from dataclasses import dataclass
 import threading
 from datetime import datetime
 
-# Add project root to path
-project_root = Path(__file__).parent.parent
-sys.path.append(str(project_root))
+# Add project root to path (for cross-project compatibility)
+try:
+    # Try relative import first (when used as package)
+    from src.max_graph import MaxGraphConfig
+except ImportError:
+    # Fallback to path manipulation (for standalone usage)
+    project_root = Path(__file__).parent.parent
+    sys.path.append(str(project_root))
 
 
 @dataclass
