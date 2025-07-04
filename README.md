@@ -1,15 +1,22 @@
 # Mojo Semantic Search - Portfolio Intelligence
 
-Real-time cross-project semantic code search powered by MAX Graph API and custom Mojo kernels.
+Real-time cross-project semantic code search powered by MAX Graph API and custom
+Mojo kernels.
 
 ## ⚠️ Experimental Status
 
-**This is an experimental research project** exploring cutting-edge Mojo language features and MAX Graph optimizations. While the code demonstrates excellent performance characteristics (sub-2ms search latency), it should be considered:
+**This is an experimental research project** exploring cutting-edge Mojo
+language features and MAX Graph optimizations. While the code demonstrates
+excellent performance characteristics (sub-2ms search latency), it should be
+considered:
 
-- **Research/Educational**: Showcasing Mojo's capabilities and MAX Graph integration
-- **Rapidly Evolving**: Mojo language and MAX API are still in active development  
+- **Research/Educational**: Showcasing Mojo's capabilities and MAX Graph
+  integration
+- **Rapidly Evolving**: Mojo language and MAX API are still in active
+  development
 - **API Unstable**: Expect breaking changes as the ecosystem matures
-- **Use Caution**: Not recommended for production systems without thorough testing
+- **Use Caution**: Not recommended for production systems without thorough
+  testing
 
 ## Quick Start
 
@@ -29,23 +36,26 @@ python tests/web/test_web_status.py
 ## Performance
 
 - **MAX Graph**: 1.8ms search latency (7x faster)
-- **Legacy Mojo**: 12.7ms search latency 
+- **Legacy Mojo**: 12.7ms search latency
 - **Corpus**: 2,637 real code snippets from 44 projects
 - **Throughput**: 10-50x faster than traditional search
 
 ## Architecture
 
 ### MAX Graph Implementation
+
 - GPU-optimized semantic search with automatic kernel fusion
 - Hardware-agnostic execution with memory optimization
 - Real-time compilation for target devices
 
-### Legacy Mojo Kernels  
+### Legacy Mojo Kernels
+
 - Custom MLA (Multi-Head Latent Attention) kernels
 - BMM (Batched Matrix Multiplication) for similarity search
 - SIMD-accelerated vector operations
 
 ### Onedev Integration
+
 - Portfolio intelligence with 69 MCP tools across 9 domains
 - Cross-project pattern detection and insights
 - Graceful fallback when onedev unavailable
@@ -84,18 +94,22 @@ src/
 ## Usage Examples
 
 ### Web Interface
-Access at `http://localhost:8080` after starting both API and web servers.
-Try queries like:
-- "authentication patterns" 
+
+Access at `http://localhost:8080` after starting both API and web servers. Try
+queries like:
+
+- "authentication patterns"
 - "React components"
 - "API error handling"
 
 ### Direct API
+
 ```bash
 curl "http://localhost:8000/search/simple?q=authentication&limit=5"
 ```
 
 ### Mojo Integration
+
 ```mojo
 # Import and use in your Mojo code
 from semantic_search_mvp import search_portfolio
@@ -104,10 +118,13 @@ let results = search_portfolio("database connections", 10)
 
 ## Performance Benchmarks
 
-| Implementation | Latency | Throughput | Use Case |
-|---------------|---------|------------|----------|
-| MAX Graph | 1.8ms | 500k vectors/sec | Experimental |
-| Legacy Mojo | 12.7ms | 75k vectors/sec | Fallback |
-| Traditional | 100-500ms | 2k vectors/sec | Baseline |
+| Implementation | Latency   | Throughput       | Use Case     |
+| -------------- | --------- | ---------------- | ------------ |
+| MAX Graph      | 1.8ms     | 500k vectors/sec | Experimental |
+| Legacy Mojo    | 12.7ms    | 75k vectors/sec  | Fallback     |
+| Traditional    | 100-500ms | 2k vectors/sec   | Baseline     |
 
-**Status**: ⚠️ **Experimental** - This project contains cutting-edge Mojo/MAX Graph implementations that are actively being developed. While functional with good performance characteristics, expect frequent changes and potential API instability. Use with caution in production environments.
+**Status**: ⚠️ **Experimental** - This project contains cutting-edge Mojo/MAX
+Graph implementations that are actively being developed. While functional with
+good performance characteristics, expect frequent changes and potential API
+instability. Use with caution in production environments.
