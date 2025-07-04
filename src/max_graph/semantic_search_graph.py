@@ -20,7 +20,46 @@ class MaxGraphConfig:
     batch_size: int = 1
     device: str = "cpu"  # or "gpu"
     use_fp16: bool = False
-    enable_fusion: bool = True
+    enable_fusion: Optional[bool] = None  # Auto-detect based on device capabilities
+    
+    def __post_init__(self):
+        # Future-proof adaptive fusion based on device capabilities
+        if self.enable_fusion is None:
+            self.enable_fusion = self._detect_optimal_fusion_setting()
+    
+    def _detect_optimal_fusion_setting(self) -> bool:
+        """
+        Detect optimal fusion setting based on device capabilities.
+        Future-proof for Apple Metal and other GPU architectures.
+        """
+        # Check if device has GPU-like parallel processing capabilities
+        if self._is_parallel_compute_device():
+            return True  # GPU-like devices benefit from fusion
+        else:
+            return False  # CPU-like devices show minimal/negative benefit
+    
+    def _is_parallel_compute_device(self) -> bool:
+        """
+        Detect if device has parallel compute capabilities.
+        Handles current and future GPU architectures automatically.
+        """
+        device_lower = self.device.lower()
+        
+        # Known parallel compute indicators
+        parallel_indicators = [
+            'gpu',           # Generic GPU
+            'cuda',          # NVIDIA CUDA
+            'metal',         # Apple Metal (future)
+            'opencl',        # OpenCL devices
+            'vulkan',        # Vulkan compute
+            'rocm',          # AMD ROCm
+            'dml',           # DirectML
+            'tensorrt',      # TensorRT optimized
+            'mlx',           # Apple MLX framework
+        ]
+        
+        # Check if device string contains any parallel compute indicators
+        return any(indicator in device_lower for indicator in parallel_indicators)
 
 class MaxSemanticSearchGraph:
     """
