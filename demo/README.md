@@ -5,12 +5,12 @@ semantic search system.
 
 ## 🎯 Demo Components
 
-### 1. Performance Validation (`hackathon_performance_validation.py`)
+### 1. Performance Validation (`performance_validation.py`)
 
-Comprehensive performance testing with hackathon-ready metrics:
+Comprehensive performance testing with configurable metrics:
 
 ```bash
-python3 demo/hackathon_performance_validation.py
+python3 demo/performance_validation.py
 ```
 
 **Features:**
@@ -63,7 +63,7 @@ python3 demo/performance_dashboard.py
 - System health monitoring
 - Demo highlights summary
 
-## 🚀 Quick Start for Hackathon
+## 🚀 Quick Start
 
 ### Option 1: Full Demo (Recommended)
 
@@ -92,7 +92,7 @@ python3 demo/performance_dashboard.py
 
 ```bash
 # Start API server first, then:
-python3 demo/hackathon_performance_validation.py
+python3 demo/performance_validation.py
 # Select option 1 for quick validation
 ```
 
